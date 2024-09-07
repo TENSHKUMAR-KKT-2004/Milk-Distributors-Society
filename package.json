@@ -1,0 +1,15 @@
+{
+  "name": "milk-distributors-society",
+  "productName": "Milk Distributors Society",
+  "version": "1.0.0",
+  "description": "Freelancing Project",
+  "main": "app.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "author": "TENSHKUMAR K",
+  "license": "ISC",
+  "dependencies": {
+    "electron": "^32.0.2"
+  }
+}
