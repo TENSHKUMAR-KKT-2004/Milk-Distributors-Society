@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Milk Society</title>
+    <link href="../assets/css/styles.css" rel="stylesheet">
+    <link href="../assets/css/bootstrap.min.css" rel="stylesheet">
+    
+  </head>
+
+<body>    
+<div class="container-fluid h-100 w-100 position-absolute">
+    <div class="row h-100">
+            <!-- side-menubar -->
+            <div class="col-12 col-lg-2 d-none d-lg-block p-3 side-menubar ">
+                <nav>
+                    <ul class="nav navbar-dark flex-column ">
+                        <li class="nav-item ">
+                          <a class="nav-link text-white active" aria-current="page" href="#">Active</a>
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link text-white" href="#">Link</a>
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link text-white" href="#">Link</a>
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link text-white disabled" aria-disabled="true">Disabled</a>
+                        </li>
+                      </ul>
+                  </nav>
+            </div>
+            <!-- side-menubar end -->
+        <div class="col-12 col-lg-10 px-0">
+            <div id="overlay" onClick="closeNav()"></div>
+
+                <!-- app menu bar -->
+                <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+                    <div class="container-fluid">
+                        <a class="navbar-brand" href="#">Milk Society Management</a>
+                        <a href="javascript:void(0);" class="menubtn d-block d-lg-none" onclick="openNav()" title="Menu"><span class=""><img src="../assets/images/menu-icon.svg" width="30"></span></a>
+                        <div class="collapse navbar-collapse">
+                            <ul class="navbar-nav ms-auto me-3 mb-2 mb-lg-0">
+                                <li class="nav-item">
+                                    <a class="nav-link active" href="#">முகப்பு</a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#">மாட்டுக்காரர்கள்</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#">கறவை பதிவு</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#">பால் கறப்பவர்கள்</a>
+                                </li>
+                                <li class="nav-item"></li>
+                                    <a class="nav-link" href="#">தீவனங்கள்</a>
+                                </li>
+                                <li class="nav-item"></li>
+                                    <a class="nav-link" href="#">பால் கம்பெனி</a>
+                                </li>
+                                <li class="nav-item"></li>
+                                    <a class="nav-link" href="#">பற்று/வரவு</a>
+                                </li>
+
+                            </ul>
+                            <!-- Logout Button -->
+                            <button class="btn btn-outline-danger logout-btn" type="button">Logout</button>
+                        </div>
+                    </div>
+                </nav>
+                <!-- app menu bar end -->
+
+            <!-- Mobile view side menu bar -->
+            <nav class=" bg-light navbar-light p-0 mobile-sidebar" id="mobile-sidebar">
+                <div class="w-100 sidebarbox" style="height:150px;position: relative;">
+                <a href="javascript:void(0)" class="hide-md closebtn" style="color:#FFF; text-decoration:none;" onClick="closeNav()"><span><img src="../assets/images/close-icon.svg" width="30"></span></a>
+                    <div class="p-2 ps-3" style="position:absolute; bottom: 0px; left: 0px;">
+                    <p class="m-0" style="color:#fff; opacity: .8;">Welcome</p>	
+                    <h4 class="text-white m-0 mb-2">Kumaran</h4>	
+                    </div>
+                </div>
+
+                <ul class="w-100 p-0 menubar1 nav-fill">
+                <li class="nav-item ps-3 mt-2"><a class="nav-link" href="#"><span ><i class="fa fa-sign-in" aria-hidden="true"></i></span><span class="ps-2">முகப்பு</span></a></li>
+                <div class="dropdown-divider"></div>
+
+                <li class="nav-item ps-3"><a class="nav-link" href="#"><span ><i class="fa fa-user" aria-hidden="true"></i></span><span class="ps-2">மாட்டுக்காரர்கள்</span></a></li>
+                <div class="dropdown-divider"></div>	
+
+                <li class="nav-item ps-3"><a class="nav-link" href="#"><span ><i class="fa fa-lock" aria-hidden="true"></i></span><span class="ps-2">கறவை பதிவு</span></a></li>
+                <div class="dropdown-divider"></div>
+                </ul>
+            </nav>
+            <!-- Mobile view side menu bar end -->
+
+            <!-- content -->
+                <div class="col-12 content-container position-relative">
+                    <!-- breadcrumb -->
+                   <div class="col-12 p-2 text-start">
+                    <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+                        <ol class="breadcrumb mb-1">
+                          <li class="breadcrumb-item active" aria-current="page">முகப்பு</li>
+                         <!--  <li class="breadcrumb-item active" aria-current="page"><a href="#">மாட்டுக்காரர்கள்</a></li> -->
+                        </ol>
+                      </nav>
+                   </div>
+                    <!-- breadcrumb -->
+<div class="col-12 p-3">
+    <div class="row justify-content-center align-items-stretch g-4">
+        <div class="col-6 col-lg-4">
+         <a href="#" class="btn btn-primary rounded-2 w-100 h-100">
+            <div class="text-start p-2">
+                <h1 class="mb-0">65</h1>
+                <p>மாட்டுக்காரர்கள்</p>
+            </div>
+         </a>   
+        </div>
+
+        <div class="col-6 col-lg-4">
+         <a href="#" class="btn btn-success rounded-2 w-100 h-100">
+            <div class="text-start p-2">
+                <h1 class="mb-0">15</h1>
+                <p>பால் கறப்பவர்கள்</p>
+            </div>
+         </a>   
+        </div>
+
+
+        <div class="col-6 col-lg-4">
+            <a href="#" class="btn btn-danger rounded-2 w-100 h-100">
+               <div class="text-start p-2">
+                   <h1 class="mb-0">590 Ltr</h1>
+                   <p>இன்றைய காலை பால் வரவு</p>
+               </div>
+            </a>   
+        </div>
+
+        <div class="col-6 col-lg-4">
+            <a href="#" class="btn btn-danger rounded-2 w-100 h-100">
+               <div class="text-start p-2">
+                   <h1 class="mb-0">590 Ltr</h1>
+                   <p>இன்றைய மாலை பால் வரவு</p>
+               </div>
+            </a>   
+        </div>
+
+        <div class="col-6 col-lg-4">
+            <a href="#" class="btn btn-warning rounded-2 w-100 h-100">
+               <div class="text-start p-2">
+                   <h1 class="mb-0">3</h1>
+                   <p>பால் கம்பெனிகள்</p>
+               </div>
+            </a>   
+        </div>
+
+        <div class="col-6 col-lg-4">
+            <a href="#" class="btn btn-primary rounded-2 w-100 h-100">
+               <div class="text-start p-2">
+                   <h1 class="mb-0">2,500</h1>
+                   <p>தீவன விற்பனை</p>
+               </div>
+            </a>   
+        </div>
+
+       
+    </div>
+
+</div>
+                    
+                </div>
+                 <!-- content end -->  
+        </div>   
+    </div>
+</div>
+footer links
+    <script src="../assets/js/bootstrap.bundle.min.js"></script>
+    <script src="../assets/js/popper.min.js"></script>
+    <script src="../assets/js/main.js"></script>
+  </body>
+</html>
