@@ -18,6 +18,20 @@ expressApp.get('/dashboard', (req, res) => {
     res.render('dashboard')
 })
 
+expressApp.get('/cow-owners', (req, res) => {
+    res.render('cow-owners')
+})
+expressApp.get('/milkers', (req, res) => {
+    res.render('milkers')
+})
+
+expressApp.get('/add-cowowner', (req, res) => {
+    res.render('add-cowowner')
+})
+expressApp.get('/add-milker', (req, res) => {
+    res.render('add-milker')
+})
+
 const server = expressApp.listen(3000, () => {
     console.log('Express server is running on http://localhost:3000')
 })

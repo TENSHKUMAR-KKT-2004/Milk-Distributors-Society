@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Milk Society</title>
+    <%- include('templates/header-links.ejs') %>    
+  </head>
+
+<body>    
+<div class="container-fluid h-100 w-100 position-absolute">
+    <div class="row h-100">
+        <%- include('templates/left-menu.ejs') %>
+        <div class="col-12 col-lg-10 px-0">
+            <div id="overlay" onClick="closeNav()"></div>
+            <%- include('templates/header.ejs') %>
+            <%- include('templates/mobile-menu.ejs') %>  
+<!-- content -->
+<div class="col-12 content-container position-relative">
+  <div class="col-12 px-3 pt-3">
+      <ul class="nav nav-pills mytabs" role="tablist">
+          <li id="mytab1" class="nav-item" role="presentation">
+              <a class="nav-link show active" id="tabmenu1" data-bs-toggle="tab" data-bs-target="#tabb1" href="#tabb1" role="tab" aria-controls="tabb1"  aria-selected="true">
+                   Active
+              </a>
+          </li>
+        
+          <li id="mytab2" class="nav-item" role="presentation">
+              <a class="nav-link" id="tabmenu2" data-bs-toggle="tab" data-bs-target="#tabb2" href="#tabb2" role="tab" aria-controls="tabb2" aria-selected="false">
+                  Inactive
+              </a>
+          </li>
+      </ul>
+  </div>
+  
+
+  <div class="col-12 px-3 pt-5 tab-content">
+      <div id="tabb1" role="tabpanel" class="tab-pane fade in active show" aria-labelledby="tabmenu1">
+          <div class="container px-0">
+              <table width="100%" border="1" cellspacing="0" cellpadding="5">
+                  <tbody>
+                      <tr>
+                      <th width="10%">S.No.</th>
+                      <th width="30%">Name</th>
+                      <th width="25%">Village</th>
+                      <th width="25%">Mobile Number</th>
+                      <th width="10%">Action</th>
+                      </tr>
+                    <tr>
+                      <td>1</td>
+                      <td>Milker Name1</td>
+                      <td>Kadamalaikundu</td>
+                      <td>12345678</td>
+                      <td><a href="#" class="btn btn-sm px-3 btn-primary w-100">View ></a></td>
+                    </tr>
+                    <tr>
+                      <td>2</td>
+                      <td>Milker Name2</td>
+                      <td>Kadamalaikundu</td>
+                      <td>12345678</td>
+                      <td><a href="#" class="btn btn-sm px-3 btn-primary w-100">View ></a></td>
+                    </tr>
+                    <tr>
+                      <td>3</td>
+                      <td>Milker Name3</td>
+                      <td>Kadamalaikundu</td>
+                      <td>12345678</td>
+                      <td><a href="#" class="btn btn-sm px-3 btn-primary w-100">View ></a></td>
+                    </tr>
+                  </tbody>
+                </table>
+                <div class="py-2 text-end">
+                  <a href="/add-milker" class="btn btn-success px-5">+ Add Milker</a>
+                </div>
+          </div>
+      </div>
+      
+      <div id="tabb2" role="tabpanel" class="tab-pane fade in" aria-labelledby="tabmenu2">
+          <div class="container px-0">
+              <table width="100%" border="1" cellspacing="0" cellpadding="5">
+                  <tbody>
+                      <tr>
+                      <th width="10%">S.No.</th>
+                      <th width="30%">Name</th>
+                      <th width="25%">Village</th>
+                      <th width="25%">Mobile Number</th>
+                      <th width="10%">Action</th>
+                      </tr>
+                    <tr>
+                      <td>1</td>
+                      <td>Name1</td>
+                      <td>Kumanantholu</td>
+                      <td>12345678</td>
+                      <td><a href="#" class="btn btn-sm px-3 btn-warning w-100">activate ></a></td>
+                    </tr>
+                    <tr>
+                      <td>2</td>
+                      <td>Name2</td>
+                      <td>Kumanantholu</td>
+                      <td>12345678</td>
+                      <td><a href="#" class="btn btn-sm px-3 btn-warning w-100">activate ></a></td>
+                    </tr>
+                    <tr>
+                      <td>3</td>
+                      <td>Name3</td>
+                      <td>Kumanantholu</td>
+                      <td>12345678</td>
+                      <td><a href="#" class="btn btn-sm px-3 btn-warning w-100">activate ></a></td>
+                    </tr>
+                  </tbody>
+                </table>
+          </div>
+      </div>
+  </div>
+</div>
+<!-- content end -->   
+        </div>   
+    </div>
+</div>
+<%- include('templates/footer-links.ejs') %>    
+  </body>
+</html>
