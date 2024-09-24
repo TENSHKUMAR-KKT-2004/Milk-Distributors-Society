@@ -4,7 +4,15 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Milk Society</title>
-    <%- include('templates/header-links.ejs') %>    
+    <%- include('templates/header-links.ejs') %>  
+    <script>
+      window.onload = function() {
+          var element = document.getElementById('menu2');
+          element.classList.add('active');
+          var element = document.getElementById('leftmenu2');
+          element.classList.add('active1');
+      };
+  </script>  
   </head>
 
 <body>    
@@ -32,12 +40,23 @@
             </li>
         </ul>
     </div>
-    
+   
 
-    <div class="col-12 px-3 pt-5 tab-content">
+    <div class="col-12 px-3 pt-2 tab-content">
+          <!-- active மாட்டுக்காரர்கள் -->
         <div id="tabb1" role="tabpanel" class="tab-pane fade in active show" aria-labelledby="tabmenu1">
             <div class="container px-0">
-                <table width="100%" border="1" cellspacing="0" cellpadding="5">
+              <div class="row mt-3">
+                <div class="col-12 col-lg-6 p-3">
+                  <h4><strong>மாட்டுக்காரர்கள்</strong></h4>
+                </div>
+                <div class="col-12 col-lg-6 p-3">
+                  <form>
+                    <div class="input-group mb-2"><input type="text" class="form-control" placeholder="Search"></div>
+                  </form>
+                </div>
+              </div>
+                <table width="100%" border="1" class="table-border"  cellspacing="0" cellpadding="5">
                     <tbody>
                         <tr>
                         <th width="10%">S.No.</th>
@@ -51,14 +70,14 @@
                         <td>Name1</td>
                         <td>Kumanantholu</td>
                         <td>12345678</td>
-                        <td><a href="#" class="btn btn-sm px-3 btn-primary w-100">View ></a></td>
+                        <td><a href="/cow-owners-one" class="btn btn-sm px-3 btn-primary w-100">View ></a></td>
                       </tr>
                       <tr>
                         <td>2</td>
                         <td>Name2</td>
                         <td>Kumanantholu</td>
                         <td>12345678</td>
-                        <td><a href="#" class="btn btn-sm px-3 btn-primary w-100">View ></a></td>
+                        <td><a href="/cow-owners-one" class="btn btn-sm px-3 btn-primary w-100">View ></a></td>
                       </tr>
                       <tr>
                         <td>3</td>
@@ -74,9 +93,22 @@
                   </div>
             </div>
         </div>
+        <!-- active மாட்டுக்காரர்கள் end -->
+
+          <!-- Inactive மாட்டுக்காரர்கள் -->
         <div id="tabb2" role="tabpanel" class="tab-pane fade in" aria-labelledby="tabmenu2">
             <div class="container px-0">
-                <table width="100%" border="1" cellspacing="0" cellpadding="5">
+              <div class="row mt-3">
+                <div class="col-12 col-lg-6 p-3">
+                  <h4><strong>மாட்டுக்காரர்கள்</strong></h4>
+                </div>
+                <div class="col-12 col-lg-6 p-3">
+                  <form>
+                    <div class="input-group mb-2"><input type="text" class="form-control" placeholder="Search"></div>
+                  </form>
+                </div>
+              </div>
+                <table width="100%" border="1" class="table-border"  cellspacing="0" cellpadding="5">
                     <tbody>
                         <tr>
                         <th width="10%">S.No.</th>
@@ -110,8 +142,10 @@
                   </table>
             </div>
         </div>
+        <!-- Inactive மாட்டுக்காரர்கள் end -->
     </div>
 </div>
+
 
 <!-- content end -->   
         </div>   

@@ -5,6 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Milk Society</title>
     <%- include('templates/header-links.ejs') %>    
+    <script>
+      window.onload = function() {
+          var element = document.getElementById('menu3');
+          element.classList.add('active');
+          var element = document.getElementById('leftmenu3');
+          element.classList.add('active1');
+      };
+  </script> 
   </head>
 
 <body>    
@@ -34,10 +42,23 @@
   </div>
   
 
-  <div class="col-12 px-3 pt-5 tab-content">
+  <div class="col-12 px-3 pt-2 tab-content">
+    <!-- active milkers -->
       <div id="tabb1" role="tabpanel" class="tab-pane fade in active show" aria-labelledby="tabmenu1">
           <div class="container px-0">
-              <table width="100%" border="1" cellspacing="0" cellpadding="5">
+
+            <div class="row mt-3">
+              <div class="col-12 col-lg-6 p-3">
+                <h4><strong>பால் கறப்பவர்கள்</strong></h4>
+              </div>
+              <div class="col-12 col-lg-6 p-3">
+                <form>
+                  <div class="input-group mb-2"><input type="text" class="form-control" placeholder="Search"></div>
+                </form>
+              </div>
+            </div>
+
+              <table width="100%" border="1" class="table-border"  cellspacing="0" cellpadding="5">
                   <tbody>
                       <tr>
                       <th width="10%">S.No.</th>
@@ -74,10 +95,22 @@
                 </div>
           </div>
       </div>
-      
+       <!-- active milkers end -->
+
+      <!-- Inactive milkers -->
       <div id="tabb2" role="tabpanel" class="tab-pane fade in" aria-labelledby="tabmenu2">
           <div class="container px-0">
-              <table width="100%" border="1" cellspacing="0" cellpadding="5">
+            <div class="row mt-3">
+              <div class="col-12 col-lg-6 p-3">
+                <h4><strong>பால் கறப்பவர்கள்</strong></h4>
+              </div>
+              <div class="col-12 col-lg-6 p-3">
+                <form>
+                  <div class="input-group mb-2"><input type="text" class="form-control" placeholder="Search"></div>
+                </form>
+              </div>
+            </div>
+              <table width="100%" border="1" class="table-border" cellspacing="0" cellpadding="5">
                   <tbody>
                       <tr>
                       <th width="10%">S.No.</th>
@@ -111,6 +144,7 @@
                 </table>
           </div>
       </div>
+       <!-- Inactive milkers end -->
   </div>
 </div>
 <!-- content end -->   

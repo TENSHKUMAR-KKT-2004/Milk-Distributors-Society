@@ -1,17 +1,32 @@
 <!-- app menu bar -->
 <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
-  <div class="container-fluid">
-  <a class="navbar-brand" href="#">Milk Society Management</a>
-  <a href="javascript:void(0);" class="menubtn d-block d-lg-none" onclick="openNav()" title="Menu"><span class=""><img src="../assets/images/menu-icon.svg" width="30"></span></a>
+  <div class="container-fluid justify-content-end">
+  <a href="javascript:void(0);" class="menubtn d-block d-lg-none" onclick="openNav()" title="Menu"><span class=""><img src="/images/menu-icon.svg" width="30"></span></a>
   <div class="collapse navbar-collapse">
   <ul class="navbar-nav ms-auto me-3 mb-2 mb-lg-0">
-      <li class="nav-item"><a class="nav-link active" href="/dashboard">முகப்பு</a></li>
-      <li class="nav-item"><a class="nav-link" href="/cow-owners">மாட்டுக்காரர்கள்</a></li>
-      <li class="nav-item"><a class="nav-link" href="/milkers">பால் கறப்பவர்கள்</a></li>
-      <li class="nav-item"><a class="nav-link" href="#">கறவை பதிவு</a></li>
-      <li class="nav-item"><a class="nav-link" href="#">தீவனங்கள்</a></li>
-      <li class="nav-item"><a class="nav-link" href="#">பால் கம்பெனி</a></li>
-      <li class="nav-item"><a class="nav-link" href="#">பற்று/வரவு</a></li>
+      <li class="nav-item"><a id="menu1" class="nav-link px-3" href="/dashboard">முகப்பு</a></li>
+      <li class="nav-item dropdown">
+        <a class="nav-link px-3 dropdown-toggle" id="menu2" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">மாட்டுக்காரர்கள்</a>
+        <ul class="dropdown-menu">
+          <li><a class="dropdown-item" href="/cow-owners">மாட்டுக்காரர்கள்</a></li>
+          <li><hr class="dropdown-divider"></li>
+          <li><a class="dropdown-item" href="/add-cowowner">மாட்டுக்காரரைச் சேர்க்க</a></li>
+        </ul>
+      </li>
+
+      <li class="nav-item dropdown">
+        <a class="nav-link px-3 dropdown-toggle" id="menu3" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">பால் கறப்பவர்கள்</a>
+        <ul class="dropdown-menu">
+          <li><a class="dropdown-item" href="/milkers">பால் கறப்பவர்கள்</a></li>
+          <li><hr class="dropdown-divider"></li>
+          <li><a class="dropdown-item" href="/add-milker">பால் கறப்பவரைச் சேர்க்க</a></li>
+        </ul>
+      </li>
+
+      <li class="nav-item"><a id="menu4" class="nav-link px-3" href="/milk-entry-all">கறவை பதிவு</a></li>
+      <li class="nav-item"><a id="menu5" class="nav-link px-3" href="#">தீவனங்கள்</a></li>
+      <li class="nav-item"><a id="menu6" class="nav-link px-3" href="#">பால் கம்பெனி</a></li>
+      <li class="nav-item"><a id="menu7" class="nav-link px-3" href="#">பற்று/வரவு</a></li>
   </ul>
   <!-- Logout Button -->
   <button class="btn btn-outline-danger logout-btn" type="button">Logout</button>

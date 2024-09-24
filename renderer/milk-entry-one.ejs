@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Milk Society</title>
+    <%- include('templates/header-links.ejs') %>  
+    <script>
+      window.onload = function() {
+          var element = document.getElementById('menu4');
+          element.classList.add('active');
+          var element = document.getElementById('leftmenu4');
+          element.classList.add('active1');
+      };
+  </script>  
+
+<style>
+  .dropdown-menu.show {
+      max-height: 200px;
+      overflow-y: auto;
+  }
+</style>
+  </head>
+
+<body>    
+<div class="container-fluid h-100 w-100 position-absolute">
+    <div class="row h-100">
+        <%- include('templates/left-menu.ejs') %>
+        <div class="col-12 col-lg-10 px-0">
+            <div id="overlay" onClick="closeNav()"></div>
+            <%- include('templates/header.ejs') %>
+            <%- include('templates/mobile-menu.ejs') %>  
+<!-- content -->
+<div class="col-12 content-container position-relative">
+<div class="col-12 bg-primary-subtle p-3 justify-content-center">
+  <div class="container row g-2 mx-auto">
+    <div class="col-12 col-lg-6 text-center text-lg-start h-100">
+      <h4 class="mt-1"><strong>Tharunbalaji, Kadamalai</strong></h4>
+    </div>
+  
+    <div class="col-12 col-lg-6 text-center text-lg-end">
+      <form class="row g-2 float-end">
+        <div class="col-auto form-group">
+          <input type="date" class="form-control">
+        </div>
+      </form>
+    </div>
+  </div>
+  </div>
+
+    <div class="container mt-3">
+      <div class="row mb-2 mt-4">
+        <div class="col-12 col-lg-6 mb-3">
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="morning" value="option1" checked>
+            <label class="form-check-label" for="morning">காலை</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="evening" value="option2">
+            <label class="form-check-label" for="evening">மாலை</label>
+          </div>
+        
+
+          
+        </div>
+
+        <div class="col-12 col-lg-6 mb-3">
+          <select class="form-select">
+            <option selected>-- select கறவைக்காரர்--</option>
+            <option value="1">Milker 1</option>
+            <option value="2">Milker 2</option>
+            <option value="3">Milker 3</option>
+          </select>
+        </div>
+  
+        <div class="col-12 col-lg-6  mb-3">
+          <input type="text" class="form-control" placeholder="பால் அளவு (ltrs)">
+        </div>
+    
+        <div class="col-12 col-lg-6  mb-3">
+          <input type="text" class="form-control" value="32">
+        </div>
+    
+        <div class="col-12 col-lg-6  mb-3">
+          <input type="text" class="form-control" placeholder="மொத்த விலை">
+        </div>
+    
+        <div class="col-12 col-lg-6  mb-3">
+          <input type="text" class="form-control" placeholder="Extra பால்">
+        </div>
+    
+        <div class="col-12 col-lg-6 offset-lg-6 mb-3">
+          <div class="row">
+            <div class="col-6">
+              <input type="submit" class="form-control btn btn-danger" value="Edit">
+            </div>
+            <div class="col-6">
+              <input type="submit" class="form-control btn btn-success" value="Save">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+
+</div>
+<!-- content end -->   
+        </div>   
+
+    </div>
+</div>
+<%- include('templates/footer-links.ejs') %>    
+  </body>
+</html>

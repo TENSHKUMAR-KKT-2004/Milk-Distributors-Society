@@ -1,7 +1,7 @@
 .login-pic{ background-image: url("../images/bg_03.jpg"); background-position: center; background-repeat: no-repeat;}
-table, th, td{border: 1px solid #9e9e9e!important; background-color: #FFF;}
-.navbar-nav > li > .nave-link{padding: 20px 5px!important;}
+.table-border td, .table-border th{border: 1px solid #8a8a8a!important; background-color: #FFF;}
 .navbar-nav > li > .active{background-color: #ff7e00; color:#ffffff!important}
+.active1{background-color: #61b3ff;}
 
 
 .side-menubar{background-color: #00106d; color:#fff; padding: 15px; box-sizing: border-box; position: relative; height: 100%;}

@@ -21,6 +21,19 @@ expressApp.get('/dashboard', (req, res) => {
 expressApp.get('/cow-owners', (req, res) => {
     res.render('cow-owners')
 })
+
+expressApp.get('/cow-owners-one', (req, res) => {
+    res.render('cow-owners-one')
+})
+
+expressApp.get('/milk-entry-one', (req, res) => {
+    res.render('milk-entry-one')
+})
+
+expressApp.get('/milk-entry-all', (req, res) => {
+    res.render('milk-entry-all')
+})
+
 expressApp.get('/milkers', (req, res) => {
     res.render('milkers')
 })
