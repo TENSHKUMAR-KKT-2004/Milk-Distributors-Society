@@ -25,37 +25,53 @@
             <%- include('templates/mobile-menu.ejs') %>  
 <!-- content -->
 <div class="col-12 content-container position-relative">
-    <div class="col-12 px-3 pt-3">
-        <ul class="nav nav-pills mytabs" role="tablist">
-            <li id="mytab1" class="nav-item" role="presentation">
-                <a class="nav-link show active" id="tabmenu1" data-bs-toggle="tab" data-bs-target="#tabb1" href="#tabb1" role="tab" aria-controls="tabb1"  aria-selected="true">
-                     Active
-                </a>
-            </li>
-          
-            <li id="mytab2" class="nav-item" role="presentation">
-                <a class="nav-link" id="tabmenu2" data-bs-toggle="tab" data-bs-target="#tabb2" href="#tabb2" role="tab" aria-controls="tabb2" aria-selected="false">
-                    Inactive
-                </a>
-            </li>
-        </ul>
+<div class="col-12 bg-primary-subtle p-3">
+  <div class="container">
+  <div class="row">
+    <div class="col-12 col-lg-6 d-flex">
+      <p class="m-0 align-self-center"><strong>மாட்டுக்காரர்கள்</strong></p>
     </div>
+    <div class="col-12 col-lg-6 text-lg-end text-center">
+      <a href="/add-cowowner" class="btn btn-success px-5">+ மாட்டுக்காரரைச் சேர்க்க</a>
+    </div>
+  </div>
+  </div>
+</div>
+
+  <div class="container">
+<div class="row mb-3">
+  <div class="col-12 col-lg-6 px-3 pt-3">
+    <ul class="nav nav-pills mytabs" role="tablist">
+        <li id="mytab1" class="nav-item" role="presentation">
+            <a class="nav-link show active" id="tabmenu1" data-bs-toggle="tab" data-bs-target="#tabb1" href="#tabb1" role="tab" aria-controls="tabb1"  aria-selected="true">
+                 Active
+            </a>
+        </li>
+      
+        <li id="mytab2" class="nav-item" role="presentation">
+            <a class="nav-link" id="tabmenu2" data-bs-toggle="tab" data-bs-target="#tabb2" href="#tabb2" role="tab" aria-controls="tabb2" aria-selected="false">
+                Inactive
+            </a>
+        </li>
+    </ul>
+</div>
+<div class="col-12 col-lg-6 px-3 pt-3 text-lg-end text-center">
+  <form>
+    <div class="input-group">
+      <input type="text" class="form-control" placeholder="Search" aria-describedby="button-addon2">
+      <button class="btn btn-primary" type="button" id="button-addon2">Search</button>
+    </div>
+  </form>
+ <!--  <a href="/add-cowowner" class="btn btn-success px-5">+ Add Cow Owner</a> -->
+</div>
+</div>
+</div>  
    
 
     <div class="col-12 px-3 pt-2 tab-content">
           <!-- active மாட்டுக்காரர்கள் -->
         <div id="tabb1" role="tabpanel" class="tab-pane fade in active show" aria-labelledby="tabmenu1">
-            <div class="container px-0">
-              <div class="row mt-3">
-                <div class="col-12 col-lg-6 p-3">
-                  <h4><strong>மாட்டுக்காரர்கள்</strong></h4>
-                </div>
-                <div class="col-12 col-lg-6 p-3">
-                  <form>
-                    <div class="input-group mb-2"><input type="text" class="form-control" placeholder="Search"></div>
-                  </form>
-                </div>
-              </div>
+            <div class="container">
                 <table width="100%" border="1" class="table-border"  cellspacing="0" cellpadding="5">
                     <tbody>
                         <tr>
@@ -67,8 +83,8 @@
                         </tr>
                       <tr>
                         <td>1</td>
-                        <td>Name1</td>
-                        <td>Kumanantholu</td>
+                        <td>Tharunbalaji</td>
+                        <td>Kadamalai</td>
                         <td>12345678</td>
                         <td><a href="/cow-owners-one" class="btn btn-sm px-3 btn-primary w-100">View ></a></td>
                       </tr>
@@ -88,26 +104,14 @@
                       </tr>
                     </tbody>
                   </table>
-                  <div class="py-2 text-end">
-                    <a href="/add-cowowner" class="btn btn-success px-5">+ Add Cow Owner</a>
-                  </div>
+                
             </div>
         </div>
         <!-- active மாட்டுக்காரர்கள் end -->
 
           <!-- Inactive மாட்டுக்காரர்கள் -->
         <div id="tabb2" role="tabpanel" class="tab-pane fade in" aria-labelledby="tabmenu2">
-            <div class="container px-0">
-              <div class="row mt-3">
-                <div class="col-12 col-lg-6 p-3">
-                  <h4><strong>மாட்டுக்காரர்கள்</strong></h4>
-                </div>
-                <div class="col-12 col-lg-6 p-3">
-                  <form>
-                    <div class="input-group mb-2"><input type="text" class="form-control" placeholder="Search"></div>
-                  </form>
-                </div>
-              </div>
+            <div class="container">
                 <table width="100%" border="1" class="table-border"  cellspacing="0" cellpadding="5">
                     <tbody>
                         <tr>

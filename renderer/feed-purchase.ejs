@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Milk Society</title>
+    <%- include('templates/header-links.ejs') %>  
+    <script>
+      window.onload = function() {
+          var element = document.getElementById('menu5');
+          element.classList.add('active');
+          var element = document.getElementById('leftmenu5');
+          element.classList.add('active1');
+      };
+  </script>  
+
+<style>
+
+</style>
+  </head>
+
+<body>    
+<div class="container-fluid h-100 w-100 position-absolute">
+    <div class="row h-100">
+        <%- include('templates/left-menu.ejs') %>
+        <div class="col-12 col-lg-10 px-0">
+            <div id="overlay" onClick="closeNav()"></div>
+            <%- include('templates/header.ejs') %>
+            <%- include('templates/mobile-menu.ejs') %>  
+<!-- content -->
+<div class="col-12 content-container position-relative">
+
+  <div class="col-12 bg-primary-subtle p-3 justify-content-center">
+    <div class="container row g-2 mx-auto">
+      <div class="col-12 col-lg-6 pt-2">
+        <p class="m-0"><strong>தீவனங்கள் கொள்முதல்</strong></p>
+      </div>
+  
+      <div class="col-12 col-lg-6 text-center text-lg-end">
+        <form class="row g-2 float-end">
+          <div class="col-auto form-group">
+            <input type="date" class="form-control">
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+    <div class="container mt-3">
+      <div class="row mb-2 mt-4">
+        <div class="col-12 col-lg-6  mb-3">
+          <input type="text" class="form-control" placeholder="Company Name">
+        </div>
+
+        <div class="col-12 col-lg-6 mb-3">
+          <select class="form-select">
+            <option selected>-- select தீவனம்--</option>
+            <option value="1">பருத்தி விதை (பெரியது)</option>
+            <option value="2">பருத்தி விதை (சிறியது)</option>
+            <option value="3">பருத்தி புண்ணாக்கு</option>
+            <option value="4">கம்பு மாவு</option>
+            <option value="5">குச்சி புண்ணாக்கு</option>
+          </select>
+        </div>
+
+        <div class="col-12 col-lg-6  mb-3">
+          <input type="text" class="form-control" placeholder="Price">
+        </div>
+    
+        <div class="col-12 col-lg-6  mb-3">
+          <input type="text" class="form-control" placeholder="Purchase Qnty">
+        </div>
+    
+        <div class="col-12 col-lg-6  mb-3">
+          <input type="text" class="form-control" placeholder="Total Price">
+        </div>
+
+        <div class="col-12 col-lg-6  mb-3">
+          <input type="text" class="form-control" placeholder="Invoice Number">
+        </div>
+
+        <div class="col-12 col-lg-6  mb-3">
+          <input type="text" class="form-control" placeholder="Sales Price">
+        </div>
+
+        <div class="col-12 col-lg-6  mb-3">
+          <input type="submit" class="form-control btn btn-primary" value="+ add">
+        </div>
+    
+      
+    
+   
+      </div>
+    </div>
+
+    <div class="container">
+      <p class="mt-3"><strong>Feed Purchase List</strong> </p>
+      <table width="100%" border="1" class="table-border"  cellspacing="0" cellpadding="5">
+        <tbody>
+            <tr>
+            <th width="5%">S.No.</th>
+            <th width="10%">Date</th>
+            <th width="30%">Company Name</th>
+            <th width="25%">Feed</th>
+            <th width="5%" align="center">Qnty</th>
+            <th width="5%">Price</th>
+            <th width="10%">Total</th>
+            <th width="10%">Action</th>
+            </tr>
+          <tr>
+            <td>1</td>
+            <td align="left">02-09-2024</td>
+            <td>Aavin</td>
+            <td>Kambu Mavu</td>
+            <td align="center">50</td>
+            <td align="right">2500.00</td>
+            <td align="right">125000.00</td>
+            <td align="right"><input type="submit" class="form-control btn btn-danger btn-sm" value="Edit"></td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td align="left">03-09-2024</td>
+            <td>Aavin</td>
+            <td>Uppu chippam</td>
+            <td align="center">20</td>
+            <td align="right">1500.00</td>
+            <td align="right">30000.00</td>
+            <td align="right"><input type="submit" class="form-control btn btn-danger btn-sm" value="Edit"></td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td align="left">04-09-2024</td>
+            <td>Aavin</td>
+            <td>Paruthi Punnakku (small)</td>
+            <td align="center">10</td>
+            <td align="right">3200.00</td>
+            <td align="right">32000.00</td>
+            <td align="right"><input type="submit" class="form-control btn btn-danger btn-sm" value="Edit"></td>
+          </tr>
+        </tbody>
+      </table>
+
+        <div class="col-12 mt-3">
+          <div class="row justify-content-end">
+            
+            <div class="col-12 col-lg-4">
+              <input type="submit" class="form-control w-100 btn btn-success" value="Save">
+            </div>
+          </div>
+        </div>
+      
+  </div>
+
+
+</div>
+<!-- content end -->   
+        </div>   
+
+    </div>
+</div>
+<%- include('templates/footer-links.ejs') %>    
+
+  </body>
+</html>

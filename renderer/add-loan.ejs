@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Milk Society</title>
+    <%- include('templates/header-links.ejs') %>    
+  </head>
+
+<body>    
+  <div class="container-fluid h-100 w-100 position-absolute bg-grey">
+    <div class="row h-100">   
+        <div class="col-12 p-4">
+          <div class="bg-primary p-2 mb-3 text-center">
+            <p class="text-white mb-0"><strong>பண ரொக்கம் வாங்கியதை சேர்க்க</strong></p>
+          </div>
+          
+          <form>
+            <div class="input-group mb-3"><input type="date" class="form-control" value="05-04-2024" disabled></div>
+            <div class="input-group mb-3"><input type="text" class="form-control" value="Tharunbalaji" disabled></div>
+            <div class="col-12 mb-3">
+              <label for="loan-amount" class="form-label">பண ரொக்கம்</label>
+              <div class="input-group">
+                <input type="text" id="loan-amount" name="loan-amount" class="form-control" placeholder="amount">
+              </div>
+            </div>
+          </form>
+          <div class="row">
+            <div class="col-6"><a href="#" class="btn btn-danger w-100">Edit</a></div>
+            <div class="col-6"><a href="#" class="btn btn-success w-100">Save</a></div>
+          </div>
+        </div>   
+    </div>
+</div>
+<%- include('templates/footer-links.ejs') %>    
+  </body>
+</html>

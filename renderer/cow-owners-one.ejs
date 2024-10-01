@@ -26,24 +26,15 @@
 <!-- content -->
 <div class="col-12 content-container position-relative">
 <div class="col-12 	bg-primary-subtle p-3">
+  <div class="container">
   <div class="row g-2">
     <div class="col-12 col-lg-6 text-center text-lg-start h-100">
       <h4 class="mt-1"><strong>Tharunbalaji, Kadamalai</strong></h4>
     </div>
-
     <div class="col-12 col-lg-6 text-center text-lg-end">
       <form class="row g-2 float-end">
         <div class="col-auto">
-          <select class="form-select">
-            <option value="2024">2024</option>
-            <option value="2023">2023</option>
-          </select>
-        </div>
-        <div class="col-auto">
-          <select class="form-select">
-            <option value="January">January</option>
-            <option value="February">February</option>
-          </select>
+          <input type="month" class="form-control" min="2024-09" value="2024-09" >
         </div>
         <div class="col-auto">
           <a href="#" class="btn btn-primary">Submit</a>
@@ -52,14 +43,14 @@
     </div>
   </div>
   </div>
-
+</div>
 <div class="container mt-3 px-3">
   <div class="row justify-content-center align-items-stretch g-4 ">
     <div class="col-6 col-lg-4">
       <a href="#" class="btn btn-warning rounded-2 w-100 h-100">
          <div class="text-start p-2">
              <h1 class="mb-0">45,370</h1>
-             <p>இம்மாத பற்று</p>
+             <p>இதுவரை/இம்மாத பற்று</p>
          </div>
       </a>   
   </div>
@@ -67,7 +58,7 @@
      <a href="#" class="btn btn-primary rounded-2 w-100 h-100">
         <div class="text-start p-2">
             <h1 class="mb-0">15,572</h1>
-            <p>இதுநாள் வரை பால் வரவு</p>
+            <p>இதுவரை/இம்மாத பால் வரவு</p>
         </div>
      </a>   
     </div>
@@ -86,14 +77,13 @@
 
 <div class="container mt-3">
   <div class="row mb-2 mt-4">
-    <div class="col-12 col-lg-6 text-center text-lg-start">
-      <p class="mb-1"><strong>பால் வரவு</strong></p>
+    <div class="col-6 text-start align-content-center">
+      <p class="mb-1 align-self-center m-0"><strong>பால் வரவு</strong></p>
     </div>
-    <div class="col-12 col-lg-6 text-center text-lg-end">
+    <div class="col-6 text-end ">
       <a href="/milk-entry-one" class="btn btn-success px-4">+ பால் வரவை சேர்க்க</a>
     </div>
   </div>
-  
 
   <table width="100%" border="1" class="table-border" cellspacing="0" cellpadding="5">
     <tbody>
@@ -175,46 +165,90 @@
 </div>
 
 <div class="container mt-3">
-  <div class="bg-success p-2 text-white">
-    <p class="mb-0"><span class="d-inline"><strong>பற்று/வரவு கணக்கு Summary</strong></span>
-      <span class="d-inline float-end"><a href="#" class="text-white text-decoration-none"><strong>View all ></strong></a></span>
-    </p>
-    
-  </div>
-  <div class="col-12 bg-success-subtle p-2">
-    
-    <table width="100%" border="0" style="border: none; background: none;" cellspacing="0" cellpadding="5">
-      <tbody>
-        
-  
-        <tr>
-          <td>இம்மாத பற்று</td>
-          <td align="right">45,370.00</td>
-        </tr>
-  
-        <tr style="border-bottom: 1px solid #4e4e4e;">
-          <td width="75%" style="border: none; background: none;">பால் வரவு (-)</td>
-          <td align="right" style="border: none; background: none;">15,572.80</td>
-        </tr>
+  <div class="row">
+    <div class="col-12 col-lg-6">
+      <div class="row mb-2">
+        <div class="col-6 text-start align-content-center">
+          <p class="mb-1 align-self-center m-0"><strong>Recent பற்று/வரவு கணக்கு</strong></p>
+        </div>
+        <div class="col-6 text-end ">
+          <a href="/add-loan" class="btn btn-danger px-4">+ பண ரொக்கம் சேர்க்க</a>
+        </div>
+      </div>
+      
+      <table width="100%" border="0" class="table-border" cellspacing="0" cellpadding="5">
+        <tbody>
+          <tr>
+            <th width="7%" align="center">S.No.</th>
+            <th width="15%" align="center">Date</th>
+            <th width="56%" align="center">Details</th>
+            <th width="25%" align="center">Amount</th>
+          </tr>
+          <tr>
+            <td>1</td>
+            <td>05-09-2024</td>
+            <td>பணம் ரொக்கம்</td>
+            <td align="right">5,000</td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>07-09-2024</td>
+            <td>கடலை மாவு 1</td>
+            <td align="right">2,500</td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td>03-09-2024</td>
+            <td>வட்டி</td>
+            <td align="right">270</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
 
-        <tr>
-          <td>அதிக பற்று</td>
-          <td align="right">29,798.00</td>
-        </tr>
-  
-        <tr style="border-bottom: 1px solid #4e4e4e;">
-          <td>முன் பற்று (+)</td>
-          <td align="right">35,000.00</td>
-        </tr>
-        
-       
-        <tr style="border-bottom: 1px solid #4e4e4e;">
-          <td>மொத்த முன் பற்று</td>
-          <td align="right"><strong>64,798.80</strong></td>
-        </tr>
-      </tbody>
-    </table>
+    <div class="col-12 col-lg-6">
+      <div class="bg-primary p-2 text-white">
+        <p class="mb-0"><span class="d-inline"><strong>பற்று/வரவு கணக்கு Summary</strong></span>
+          <span class="d-inline float-end"><a href="#" class="text-white text-decoration-none"><strong>View all ></strong></a></span>
+        </p>
+      </div>
+
+      <div class="col-12 bg-info-subtle p-2">
+        <table width="100%" border="0" style="border: none; background: none;" cellspacing="0" cellpadding="5">
+          <tbody>
+            <tr>
+              <td>இதுவரை/இம்மாத பற்று</td>
+              <td align="right">45,370.00</td>
+            </tr>
+      
+            <tr style="border-bottom: 1px solid #4e4e4e;">
+              <td width="75%" style="border: none; background: none;">இதுவரை/இம்மாத பால் வரவு (-)</td>
+              <td align="right" style="border: none; background: none;">15,572.80</td>
+            </tr>
+    
+            <tr>
+              <td>அதிக பற்று</td>
+              <td align="right">29,798.00</td>
+            </tr>
+      
+            <tr style="border-bottom: 1px solid #4e4e4e;">
+              <td>முன் பற்று (+)</td>
+              <td align="right">35,000.00</td>
+            </tr>
+            
+           
+            <tr style="border-bottom: 1px solid #4e4e4e;">
+              <td>மொத்த முன் பற்று</td>
+              <td align="right"><strong>64,798.80</strong></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
   </div>
+ 
+
   
 </div>
 <div class="container mt-1">

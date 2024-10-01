@@ -1,5 +1,5 @@
 const path = require('path')
-const { app, BrowserWindow, Menu } = require('electron')
+const { app, BrowserWindow, Menu, screen } = require('electron')
 const express = require('express')
 
 // Set up Express app
@@ -26,6 +26,14 @@ expressApp.get('/cow-owners-one', (req, res) => {
     res.render('cow-owners-one')
 })
 
+expressApp.get('/cowowner-add', (req, res) => {
+    res.render('cowowner-add')
+})
+
+expressApp.get('/add-loan', (req, res) => {
+    res.render('add-loan')
+})
+
 expressApp.get('/milk-entry-one', (req, res) => {
     res.render('milk-entry-one')
 })
@@ -37,13 +45,47 @@ expressApp.get('/milk-entry-all', (req, res) => {
 expressApp.get('/milkers', (req, res) => {
     res.render('milkers')
 })
+expressApp.get('/milkers-one', (req, res) => {
+    res.render('milkers-one')
+})
 
-expressApp.get('/add-cowowner', (req, res) => {
-    res.render('add-cowowner')
+expressApp.get('/milker-add', (req, res) => {
+    res.render('milker-add')
 })
-expressApp.get('/add-milker', (req, res) => {
-    res.render('add-milker')
+
+expressApp.get('/feeds', (req, res) => {
+    res.render('feeds')
 })
+
+expressApp.get('/feed-add', (req, res) => {
+    res.render('feed-add')
+})
+
+expressApp.get('/feed-edit', (req, res) => {
+    res.render('feed-edit')
+})
+
+expressApp.get('/feed-sales', (req, res) => {
+    res.render('feed-sales')
+})
+
+expressApp.get('/feed-purchase', (req, res) => {
+    res.render('feed-purchase')
+})
+
+expressApp.get('/milk-company', (req, res) => {
+    res.render('milk-company')
+})
+
+expressApp.get('/milkcompany-add', (req, res) => {
+    res.render('milkcompany-add')
+})
+
+expressApp.get('/milk-sales', (req, res) => {
+    res.render('milk-sales')
+})
+
+
 
 const server = expressApp.listen(3000, () => {
     console.log('Express server is running on http://localhost:3000')
@@ -53,15 +95,18 @@ const server = expressApp.listen(3000, () => {
 const isDev = process.env.NODE_ENV !== 'production'
 
 const createMainWindow = () => {
+
     mainWin = new BrowserWindow({
         title: 'Milk Distributors Society',
-        width: isDev ? 1000 : 800,
-        height: 600,
+        width: 1366, // Set initial width
+        height: 768, // Set initial height
         webPreferences: {
             nodeIntegration: false,
             contextIsolation: true,
         },
-    })
+    });
+
+    mainWin.maximize(); 
 
     const mainMenu = Menu.buildFromTemplate(menu)
     Menu.setApplicationMenu(mainMenu)
@@ -96,8 +141,19 @@ const menu = [
                 // accelerator: "Ctrl+W"
             }
         ]
+        
+    },
+    {
+        label: "Dashboard",
+        click: () => {
+            if (mainWin) {
+                mainWin.loadURL('http://localhost:3000/dashboard'); // Use loadURL for routing
+            } else {
+                console.error("Main window is not defined");
+            }
+        }
     }
-]
+];
 
 app.on('window-all-closed', () => {
     if (process.platform !== 'darwin') {

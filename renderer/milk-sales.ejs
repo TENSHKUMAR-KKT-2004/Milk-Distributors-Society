@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Milk Society</title>
+    <%- include('templates/header-links.ejs') %>  
+    <script>
+      window.onload = function() {
+          var element = document.getElementById('menu6');
+          element.classList.add('active');
+          var element = document.getElementById('leftmenu6');
+          element.classList.add('active1');
+      };
+  </script>  
+
+<style>
+  .search-menu.show {
+      max-height: 200px;
+      overflow-y: auto;
+  }
+</style>
+  </head>
+
+<body>    
+<div class="container-fluid h-100 w-100 position-absolute">
+    <div class="row h-100">
+        <%- include('templates/left-menu.ejs') %>
+        <div class="col-12 col-lg-10 px-0">
+            <div id="overlay" onClick="closeNav()"></div>
+            <%- include('templates/header.ejs') %>
+            <%- include('templates/mobile-menu.ejs') %>  
+<!-- content -->
+<div class="col-12 content-container position-relative">
+<div class="col-12 bg-primary-subtle p-3 justify-content-center">
+  <div class="container row g-2 mx-auto">
+    <div class="col-12 col-lg-6 pt-2">
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="morning" value="option1" checked>
+        <label class="form-check-label" for="morning">காலை</label>
+      </div>
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="evening" value="option2">
+        <label class="form-check-label" for="evening">மாலை</label>
+      </div>
+  </div>
+
+    <div class="col-12 col-lg-6 text-center text-lg-end">
+      <form class="row g-2 float-end">
+        <div class="col-auto form-group">
+          <input type="date" class="form-control">
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+
+    <div class="container mt-3">
+      <div class="row mb-2 mt-4">
+        <div class="col-12 col-lg-6 mb-3">
+          <select class="form-select">
+            <option selected>-- select பால் கம்பெனி--</option>
+            <option value="1">Aavin</option>
+            <option value="2">VGP</option>
+            <option value="3">other</option>
+          </select>
+        </div>
+    
+  
+    
+        <div class="col-12 col-lg-6  mb-3">
+          <input type="text" class="form-control" placeholder="பால் அளவு (ltrs)">
+        </div>
+    
+        <div class="col-12 col-lg-6  mb-3">
+          <input type="text" class="form-control"  placeholder="பால் விலை">
+        </div>
+    
+        <div class="col-12 col-lg-6  mb-3">
+          <input type="text" class="form-control" placeholder="மொத்த Amount">
+        </div>
+    
+      
+    
+        <div class="col-12 col-lg-6 offset-lg-6 mb-3">
+          <div class="row">
+            <div class="col-6">
+              <input type="submit" class="form-control btn btn-danger" value="Edit">
+            </div>
+            <div class="col-6">
+              <input type="submit" class="form-control btn btn-success" value="Save">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <p class="mt-3"><strong>Recent Transaction</strong> </p>
+      <table width="100%" border="1" class="table-border" cellspacing="0" cellpadding="5">
+        <tbody>
+            <tr>
+            <th width="5%">எண்</th>
+            <th width="8%">தேதி</th>
+            <th width="10%">பால் கம்பெனி</th>
+            <th width="10%">காலை(லி) </th>
+            <th width="10%">மாலை(லி) </th>
+            <th width="10%">மொத்த பால்</th>
+            <th width="10%">பால் விலை</th>
+            <th width="10%">மொத்த Amount</th>
+            <th width="10%">Action</th>
+            </tr>
+          <tr>
+            <td>1</td>
+            <td>01-09-2024</td>
+            <td>Aavin</td>
+            <td>9.5</td>
+            <td>8.4</td>
+            <td>17.9</td>
+            <td>34.00</td>
+            <td>532.00</td>
+            <td><a href="/milk-edit" class="btn btn-sm px-3 btn-primary w-100">Edit ></a></td>
+          </tr>
+          
+          <tr>
+            <td>2</td>
+            <td>01-09-2024</td>
+            <td>Aavin</td>
+            <td>9.5</td>
+            <td>8.4</td>
+            <td>17.9</td>
+            <td>34.00</td>
+            <td>532.00</td>
+            <td><a href="/milk-edit" class="btn btn-sm px-3 btn-primary w-100">Edit ></a></td>
+          </tr>
+    
+          <tr>
+            <td>3</td>
+            <td>01-09-2024</td>
+            <td>Aavin</td>
+            <td>9.5</td>
+            <td>8.4</td>
+            <td>17.9</td>
+            <td>34.00</td>
+            <td>532.00</td>
+            <td><a href="/milk-edit" class="btn btn-sm px-3 btn-primary w-100">Edit ></a></td>
+          </tr>
+          <tr>
+            <td>4</td>
+            <td>01-09-2024</td>
+            <td>Aavin</td>
+            <td>9.5</td>
+            <td>8.4</td>
+            <td>17.9</td>
+            <td>34.00</td>
+            <td>532.00</td>
+            <td><a href="/milk-edit" class="btn btn-sm px-3 btn-primary w-100 ">Edit ></a></td>
+          </tr>
+          <tr>
+            <td colspan="6" align="right">மொத்தம்</td>
+            <td>244.6</td>
+            <td>5000.00</td>
+            <td></td>
+          </tr>
+    
+        </tbody>
+      </table>
+  </div>
+
+
+</div>
+<!-- content end -->   
+        </div>   
+
+    </div>
+</div>
+<%- include('templates/footer-links.ejs') %>    
+<script>
+  $(document).ready(function() {
+      // Filter dropdown items based on search input
+      $('.dropdownSearch').on('keyup', function() {
+          var value = $(this).val().toLowerCase();
+          $('#dropdownItems2 .dropdown-item').filter(function() {
+              $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
+          });
+      });
+
+      // Show dropdown menu on button focus
+      $('#dropdownMenuButton').on('keydown', function() {
+          $('.search-menu').addClass('show');
+      });
+
+      // Handle dropdown item selection
+      $('#dropdownItems2').on('click', '.dropdown-item', function() {
+          // Update input value with the selected item text
+          $('#dropdownMenuButton').val($(this).text());
+          $('#dropdownMenuButton').focus(); // Optional, as it's already focused
+          $('.search-menu').removeClass('show'); // Hide the dropdown after selection
+      });
+
+      // Close dropdown when clicking outside
+      $(document).on('click', function(e) {
+          if (!$(e.target).closest('.dropdown').length) {
+              $('.search-menu').removeClass('show');
+          }
+      });
+  });
+</script>
+  </body>
+</html>

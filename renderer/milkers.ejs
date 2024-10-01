@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Milk Society</title>
-    <%- include('templates/header-links.ejs') %>    
+    <%- include('templates/header-links.ejs') %>  
     <script>
       window.onload = function() {
           var element = document.getElementById('menu3');
@@ -12,7 +12,7 @@
           var element = document.getElementById('leftmenu3');
           element.classList.add('active1');
       };
-  </script> 
+  </script>  
   </head>
 
 <body>    
@@ -25,128 +25,132 @@
             <%- include('templates/mobile-menu.ejs') %>  
 <!-- content -->
 <div class="col-12 content-container position-relative">
-  <div class="col-12 px-3 pt-3">
-      <ul class="nav nav-pills mytabs" role="tablist">
-          <li id="mytab1" class="nav-item" role="presentation">
-              <a class="nav-link show active" id="tabmenu1" data-bs-toggle="tab" data-bs-target="#tabb1" href="#tabb1" role="tab" aria-controls="tabb1"  aria-selected="true">
-                   Active
-              </a>
-          </li>
-        
-          <li id="mytab2" class="nav-item" role="presentation">
-              <a class="nav-link" id="tabmenu2" data-bs-toggle="tab" data-bs-target="#tabb2" href="#tabb2" role="tab" aria-controls="tabb2" aria-selected="false">
-                  Inactive
-              </a>
-          </li>
-      </ul>
+<div class="col-12 bg-primary-subtle p-3">
+  <div class="container">
+  <div class="row">
+    <div class="col-12 col-lg-6 d-flex">
+      <p class="m-0 align-self-center"><strong>பால் கறப்பவர்கள்</strong></p>
+    </div>
+    <div class="col-12 col-lg-6 text-lg-end text-center">
+      <a href="/add-milker" class="btn btn-success px-5">+ பால் கறப்பவரைச் சேர்க்க</a>
+    </div>
   </div>
-  
-
-  <div class="col-12 px-3 pt-2 tab-content">
-    <!-- active milkers -->
-      <div id="tabb1" role="tabpanel" class="tab-pane fade in active show" aria-labelledby="tabmenu1">
-          <div class="container px-0">
-
-            <div class="row mt-3">
-              <div class="col-12 col-lg-6 p-3">
-                <h4><strong>பால் கறப்பவர்கள்</strong></h4>
-              </div>
-              <div class="col-12 col-lg-6 p-3">
-                <form>
-                  <div class="input-group mb-2"><input type="text" class="form-control" placeholder="Search"></div>
-                </form>
-              </div>
-            </div>
-
-              <table width="100%" border="1" class="table-border"  cellspacing="0" cellpadding="5">
-                  <tbody>
-                      <tr>
-                      <th width="10%">S.No.</th>
-                      <th width="30%">Name</th>
-                      <th width="25%">Village</th>
-                      <th width="25%">Mobile Number</th>
-                      <th width="10%">Action</th>
-                      </tr>
-                    <tr>
-                      <td>1</td>
-                      <td>Milker Name1</td>
-                      <td>Kadamalaikundu</td>
-                      <td>12345678</td>
-                      <td><a href="#" class="btn btn-sm px-3 btn-primary w-100">View ></a></td>
-                    </tr>
-                    <tr>
-                      <td>2</td>
-                      <td>Milker Name2</td>
-                      <td>Kadamalaikundu</td>
-                      <td>12345678</td>
-                      <td><a href="#" class="btn btn-sm px-3 btn-primary w-100">View ></a></td>
-                    </tr>
-                    <tr>
-                      <td>3</td>
-                      <td>Milker Name3</td>
-                      <td>Kadamalaikundu</td>
-                      <td>12345678</td>
-                      <td><a href="#" class="btn btn-sm px-3 btn-primary w-100">View ></a></td>
-                    </tr>
-                  </tbody>
-                </table>
-                <div class="py-2 text-end">
-                  <a href="/add-milker" class="btn btn-success px-5">+ Add Milker</a>
-                </div>
-          </div>
-      </div>
-       <!-- active milkers end -->
-
-      <!-- Inactive milkers -->
-      <div id="tabb2" role="tabpanel" class="tab-pane fade in" aria-labelledby="tabmenu2">
-          <div class="container px-0">
-            <div class="row mt-3">
-              <div class="col-12 col-lg-6 p-3">
-                <h4><strong>பால் கறப்பவர்கள்</strong></h4>
-              </div>
-              <div class="col-12 col-lg-6 p-3">
-                <form>
-                  <div class="input-group mb-2"><input type="text" class="form-control" placeholder="Search"></div>
-                </form>
-              </div>
-            </div>
-              <table width="100%" border="1" class="table-border" cellspacing="0" cellpadding="5">
-                  <tbody>
-                      <tr>
-                      <th width="10%">S.No.</th>
-                      <th width="30%">Name</th>
-                      <th width="25%">Village</th>
-                      <th width="25%">Mobile Number</th>
-                      <th width="10%">Action</th>
-                      </tr>
-                    <tr>
-                      <td>1</td>
-                      <td>Name1</td>
-                      <td>Kumanantholu</td>
-                      <td>12345678</td>
-                      <td><a href="#" class="btn btn-sm px-3 btn-warning w-100">activate ></a></td>
-                    </tr>
-                    <tr>
-                      <td>2</td>
-                      <td>Name2</td>
-                      <td>Kumanantholu</td>
-                      <td>12345678</td>
-                      <td><a href="#" class="btn btn-sm px-3 btn-warning w-100">activate ></a></td>
-                    </tr>
-                    <tr>
-                      <td>3</td>
-                      <td>Name3</td>
-                      <td>Kumanantholu</td>
-                      <td>12345678</td>
-                      <td><a href="#" class="btn btn-sm px-3 btn-warning w-100">activate ></a></td>
-                    </tr>
-                  </tbody>
-                </table>
-          </div>
-      </div>
-       <!-- Inactive milkers end -->
   </div>
 </div>
+
+  <div class="container">
+<div class="row mb-3">
+  <div class="col-12 col-lg-6 px-3 pt-3">
+    <ul class="nav nav-pills mytabs" role="tablist">
+        <li id="mytab1" class="nav-item" role="presentation">
+            <a class="nav-link show active" id="tabmenu1" data-bs-toggle="tab" data-bs-target="#tabb1" href="#tabb1" role="tab" aria-controls="tabb1"  aria-selected="true">
+                 Active
+            </a>
+        </li>
+      
+        <li id="mytab2" class="nav-item" role="presentation">
+            <a class="nav-link" id="tabmenu2" data-bs-toggle="tab" data-bs-target="#tabb2" href="#tabb2" role="tab" aria-controls="tabb2" aria-selected="false">
+                Inactive
+            </a>
+        </li>
+    </ul>
+</div>
+<div class="col-12 col-lg-6 px-3 pt-3 text-lg-end text-center">
+  <form>
+    <div class="input-group">
+      <input type="text" class="form-control" placeholder="Search" aria-describedby="button-addon2">
+      <button class="btn btn-primary" type="button" id="button-addon2">Search</button>
+    </div>
+  </form>
+ <!--  <a href="/add-cowowner" class="btn btn-success px-5">+ Add Cow Owner</a> -->
+</div>
+</div>
+</div>  
+   
+
+    <div class="col-12 px-3 pt-2 tab-content">
+          <!-- active மாட்டுக்காரர்கள் -->
+        <div id="tabb1" role="tabpanel" class="tab-pane fade in active show" aria-labelledby="tabmenu1">
+            <div class="container">
+                <table width="100%" border="1" class="table-border"  cellspacing="0" cellpadding="5">
+                    <tbody>
+                        <tr>
+                        <th width="10%">S.No.</th>
+                        <th width="30%">Name</th>
+                        <th width="25%">Village</th>
+                        <th width="25%">Mobile Number</th>
+                        <th width="10%">Action</th>
+                        </tr>
+                      <tr>
+                        <td>1</td>
+                        <td>Milker 1</td>
+                        <td>Kadamalai</td>
+                        <td>12345678</td>
+                        <td><a href="/milkers-one" class="btn btn-sm px-3 btn-primary w-100">View ></a></td>
+                      </tr>
+                      <tr>
+                        <td>2</td>
+                        <td>Milker 2</td>
+                        <td>Kumanantholu</td>
+                        <td>12345678</td>
+                        <td><a href="/milkers-one" class="btn btn-sm px-3 btn-primary w-100">View ></a></td>
+                      </tr>
+                      <tr>
+                        <td>3</td>
+                        <td>Milker 3</td>
+                        <td>Kumanantholu</td>
+                        <td>12345678</td>
+                        <td><a href="/milkers-one" class="btn btn-sm px-3 btn-primary w-100">View ></a></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                
+            </div>
+        </div>
+        <!-- active மாட்டுக்காரர்கள் end -->
+
+          <!-- Inactive மாட்டுக்காரர்கள் -->
+        <div id="tabb2" role="tabpanel" class="tab-pane fade in" aria-labelledby="tabmenu2">
+            <div class="container">
+                <table width="100%" border="1" class="table-border"  cellspacing="0" cellpadding="5">
+                    <tbody>
+                        <tr>
+                        <th width="10%">S.No.</th>
+                        <th width="30%">Name</th>
+                        <th width="25%">Village</th>
+                        <th width="25%">Mobile Number</th>
+                        <th width="10%">Action</th>
+                        </tr>
+                      <tr>
+                        <td>1</td>
+                        <td>Name1</td>
+                        <td>Kumanantholu</td>
+                        <td>12345678</td>
+                        <td><a href="#" class="btn btn-sm px-3 btn-warning w-100">activate ></a></td>
+                      </tr>
+                      <tr>
+                        <td>2</td>
+                        <td>Name2</td>
+                        <td>Kumanantholu</td>
+                        <td>12345678</td>
+                        <td><a href="#" class="btn btn-sm px-3 btn-warning w-100">activate ></a></td>
+                      </tr>
+                      <tr>
+                        <td>3</td>
+                        <td>Name3</td>
+                        <td>Kumanantholu</td>
+                        <td>12345678</td>
+                        <td><a href="#" class="btn btn-sm px-3 btn-warning w-100">activate ></a></td>
+                      </tr>
+                    </tbody>
+                  </table>
+            </div>
+        </div>
+        <!-- Inactive மாட்டுக்காரர்கள் end -->
+    </div>
+</div>
+
+
 <!-- content end -->   
         </div>   
     </div>

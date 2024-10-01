@@ -1,0 +1,260 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Milk Society</title>
+    <%- include('templates/header-links.ejs') %>  
+    <script>
+      window.onload = function() {
+          var element = document.getElementById('menu3');
+          element.classList.add('active');
+          var element = document.getElementById('leftmenu3');
+          element.classList.add('active1');
+      };
+  </script>  
+  </head>
+
+<body>    
+<div class="container-fluid h-100 w-100 position-absolute">
+    <div class="row h-100">
+        <%- include('templates/left-menu.ejs') %>
+        <div class="col-12 col-lg-10 px-0">
+            <div id="overlay" onClick="closeNav()"></div>
+            <%- include('templates/header.ejs') %>
+            <%- include('templates/mobile-menu.ejs') %>  
+<!-- content -->
+<div class="col-12 content-container position-relative">
+<div class="col-12 	bg-primary-subtle p-3">
+  <div class="container">
+  <div class="row g-2">
+    <div class="col-12 col-lg-6 text-center text-lg-start h-100">
+      <h4 class="mt-1"><strong>பால் கறப்பவர்1, Kadamalai</strong></h4>
+    </div>
+    <div class="col-12 col-lg-6 text-center text-lg-end">
+      <form class="row g-2 float-end">
+        <div class="col-auto">
+          <input type="month" class="form-control" min="2024-09" value="2024-09" >
+        </div>
+        <div class="col-auto">
+          <a href="#" class="btn btn-primary">Submit</a>
+        </div>
+      </form>
+    </div>
+  </div>
+  </div>
+</div>
+<div class="container mt-3 px-3">
+  <div class="row justify-content-center align-items-stretch g-4 ">
+    <div class="col-6 col-lg-4">
+      <a href="#" class="btn btn-warning rounded-2 w-100 h-100">
+         <div class="text-start p-2">
+             <h1 class="mb-0">45,370</h1>
+             <p>இதுவரை/இம்மாத பற்று</p>
+         </div>
+      </a>   
+  </div>
+    <div class="col-6 col-lg-4">
+     <a href="#" class="btn btn-primary rounded-2 w-100 h-100">
+        <div class="text-start p-2">
+            <h1 class="mb-0">5,572</h1>
+            <p>இதுவரை/இம்மாத கறவை கூலி</p>
+        </div>
+     </a>   
+    </div>
+  
+    <div class="col-6 col-lg-4">
+     <a href="#" class="btn btn-danger rounded-2 w-100 h-100">
+        <div class="text-start p-2">
+            <h1 class="mb-0">64,798</h1>
+            <p>மொத்த முன்பற்று</p>
+        </div>
+     </a>   
+    </div>
+
+  </div>
+</div>
+
+<div class="container mt-3">
+  <div class="row mb-2 mt-4">
+    <div class="col-12 text-start align-content-center">
+      <p class="mb-1 align-self-center m-0"><strong>இதுவரை பால் பீச்சியது</strong></p>
+    </div>
+  </div>
+
+  <table width="100%" border="1" class="table-border" cellspacing="0" cellpadding="5">
+    <tbody>
+        <tr>
+        <th width="3%">எண்</th>
+        <th width="8%">தேதி</th>
+        <th width="25%">மாட்டுக்காரர்</th>
+        <th width="5%">காலை(லி) </th>
+        <th width="5%">மாலை(லி) </th>
+        <th width="10%">மொத்த பால்(லி)</th>
+        </tr>
+      <tr>
+        <td>1</td>
+        <td>01-09-2024</td>
+        <td>மாட்டுக்காரர் 1</td>
+        <td>9.5</td>
+        <td>8.4</td>
+        <td>17.9</td>
+      </tr>
+      
+      <tr>
+        <td>2</td>
+        <td>02-09-2024</td>
+        <td>மாட்டுக்காரர் 2</td>
+        <td>9.5</td>
+        <td>8.4</td>
+        <td>17.9</td>
+      </tr>
+
+      <tr>
+        <td>3</td>
+        <td>02-09-2024</td>
+        <td>மாட்டுக்காரர் 3</td>
+        <td>9.5</td>
+        <td>8.4</td>
+        <td>17.9</td>
+      </tr>
+
+      <tr>
+        <td>4</td>
+        <td>02-09-2024</td>
+        <td>மாட்டுக்காரர் 4</td>
+        <td>9.5</td>
+        <td>8.4</td>
+        <td>17.9</td>
+      </tr>
+
+      <tr>
+        <td>5</td>
+        <td>02-09-2024</td>
+        <td>மாட்டுக்காரர் 5</td>
+        <td>9.5</td>
+        <td>8.4</td>
+        <td>17.9</td>
+      </tr>
+
+      <tr>
+        <td>6</td>
+        <td>02-09-2024</td>
+        <td>மாட்டுக்காரர் 6</td>
+        <td>9.5</td>
+        <td>8.4</td>
+        <td>17.9</td>
+      </tr>
+
+      <tr>
+        <td colspan="5" align="right">மொத்தம்</td>
+        <td ><strong>250</strong></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="container mt-3">
+  <div class="row">
+    <div class="col-12 col-lg-6">
+      <div class="row mb-2">
+        <div class="col-6 text-start align-content-center">
+          <p class="mb-1 align-self-center m-0"><strong>Recent பற்று/வரவு கணக்கு</strong></p>
+        </div>
+        <div class="col-6 text-end ">
+          <a href="/add-loan" class="btn btn-danger px-4">+ பண ரொக்கம் சேர்க்க</a>
+        </div>
+      </div>
+      
+      <table width="100%" border="0" class="table-border" cellspacing="0" cellpadding="5">
+        <tbody>
+          <tr>
+            <th width="7%" align="center">S.No.</th>
+            <th width="15%" align="center">Date</th>
+            <th width="56%" align="center">Details</th>
+            <th width="25%" align="center">Amount</th>
+          </tr>
+          <tr>
+            <td>1</td>
+            <td>05-09-2024</td>
+            <td>பணம் ரொக்கம்</td>
+            <td align="right">5,000</td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>07-09-2024</td>
+            <td>கடலை மாவு 1</td>
+            <td align="right">2,500</td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td>03-09-2024</td>
+            <td>வட்டி</td>
+            <td align="right">270</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="col-12 col-lg-6">
+      <div class="bg-primary p-2 text-white">
+        <p class="mb-0"><span class="d-inline"><strong>பற்று/வரவு கணக்கு Summary</strong></span>
+          <span class="d-inline float-end"><a href="#" class="text-white text-decoration-none"><strong>View all ></strong></a></span>
+        </p>
+      </div>
+
+      <div class="col-12 bg-info-subtle p-2">
+        <table width="100%" border="0" style="border: none; background: none;" cellspacing="0" cellpadding="5">
+          <tbody>
+            <tr>
+              <td>இதுவரை/இம்மாத பற்று</td>
+              <td align="right">45,370.00</td>
+            </tr>
+      
+            <tr style="border-bottom: 1px solid #4e4e4e;">
+              <td width="75%" style="border: none; background: none;">இதுவரை/இம்மாத கறவை கூலி (-)</td>
+              <td align="right" style="border: none; background: none;">5,572.80</td>
+            </tr>
+    
+            <tr>
+              <td>அதிக பற்று</td>
+              <td align="right">29,798.00</td>
+            </tr>
+      
+            <tr style="border-bottom: 1px solid #4e4e4e;">
+              <td>முன் பற்று (+)</td>
+              <td align="right">35,000.00</td>
+            </tr>
+            
+           
+            <tr style="border-bottom: 1px solid #4e4e4e;">
+              <td>மொத்த முன் பற்று</td>
+              <td align="right"><strong>64,798.80</strong></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </div>
+ 
+
+  
+</div>
+<div class="container mt-1">
+  <div class="col-12 col-lg-6">
+    
+      </div>
+</div>
+
+
+
+</div>
+<!-- content end -->   
+        </div>   
+
+    </div>
+</div>
+<%- include('templates/footer-links.ejs') %>    
+  </body>
+</html>
