@@ -14,22 +14,53 @@
             <h4 class="mb-4">Welcome!</h4>
             <h2 class="text-center mb-0 text-success"><strong>MuthuPrabu</strong></h2>
             <h5 class="mb-5"><strong>Milk Society</strong></h5>
-            <form>
-                <div class="mb-3">
-                    <!-- <label for="username" class="form-label">Username</label> -->
-                    <input type="text" class="form-control" id="username" placeholder="Enter username" required>
-                </div>
-                <div class="mb-3">
-                    <input type="password" class="form-control" id="password" placeholder="Enter password" required>
-                </div>
-                <div class="d-grid gap-2">
-                    <a href="/dashboard" class="btn btn-primary">Login</a>
-                    <!-- <button type="submit" class="btn btn-primary">Login</button> -->
-                </div>
-            </form>
+            <div id="error-message" class="alert alert-danger d-none" role="alert"></div>
+            <form id="loginForm" method="POST" action="/auth/login">
+              <div class="mb-3">
+                  <input type="text" class="form-control" id="username" name="username" placeholder="Enter username" required>
+              </div>
+              <div class="mb-3">
+                  <input type="password" class="form-control" id="password" name="password" placeholder="Enter password" required>
+              </div>
+              <div class="d-grid gap-2">
+                  <button type="submit" class="btn btn-primary">Login</button>
+              </div>
+          </form>
         </div>
     </div>
     </div>
+
+    <script>
+      document.getElementById('loginForm').addEventListener('submit', async function (event) {
+          event.preventDefault();
+          
+          const username = document.getElementById('username').value;
+          const password = document.getElementById('password').value;
+          try {
+            const response = await fetch('/auth/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ username, password }),
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                const errorMessage = document.getElementById('error-message');
+                errorMessage.textContent = data.message;
+                errorMessage.classList.remove('d-none');
+            } else {
+                localStorage.setItem('token', data.token);
+                window.location.href = '/dashboard'
+            }
+        } catch (error) {
+            console.error('Error:', error);
+        }
+      });
+  </script>
+  
     <script src="/js/bootstrap.bundle.min.js"></script>
     <script src="/js/popper.min.js"></script>
   </body>
