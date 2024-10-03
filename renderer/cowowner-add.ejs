@@ -14,17 +14,19 @@
           <div class="bg-primary p-2 mb-3 text-center">
             <p class="text-white mb-0"><strong>மாட்டுக்காரரை சேர்க்க</strong></p>
           </div>
+        <div id="error-message" class="alert alert-danger d-none" role="alert"></div>
           
-          <form>
+          <form id="formData">
             <div class="input-group mb-3"><input type="text" class="form-control" placeholder="Name"></div>
             <div class="input-group mb-3"><input type="text" class="form-control" placeholder="Cow Count"></div>
             <div class="input-group mb-3"><input type="text" class="form-control" placeholder="Milk Rate"></div>
             <div class="input-group mb-3">
               <select class="form-select">
                 <option selected>-- பால் கறப்பவர் --</option>
-                <option value="1">Milker 1</option>
-                <option value="2">Milker 2</option>
-                <option value="3">Milker 3</option>
+                <option value="self">Self</option>
+                <% collectors.forEach(function(collector) { %>
+                  <option value="<%= collector.id %>"><%= collector.name %></option>
+                <% }); %>
               </select>
             </div>
             <div class="input-group mb-3"><input type="text" class="form-control" placeholder="Mobile Number"></div>
@@ -39,5 +41,46 @@
     </div>
 </div>
 <%- include('templates/footer-links.ejs') %>    
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const form = document.getElementById('formData');
+    form.addEventListener('submit', async function (event) {
+      event.preventDefault();
+
+      document.getElementById('error-message').classList.add('d-none');
+
+      const name = document.getElementById('name').value;
+      const contact_no = document.getElementById('contact_no').value;
+      const address = document.getElementById('address').value;
+      const village_name = document.getElementById('village_name').value;
+      const salary = document.getElementById('salary').value;
+      try {
+        const response = await fetch('/milker-add', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ name, contact_no, address, village_name, salary }),
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+          const errorMessage = document.getElementById('error-message');
+          errorMessage.textContent = data.message;
+          errorMessage.classList.remove('d-none');
+        }
+        else {
+          alert(data.message || 'Milker added successfully!');
+        }
+      } catch (error) {
+        console.error('Error:', error);
+        const errorMessage = document.getElementById('error-message');
+        errorMessage.textContent = 'Error: Could not submit data';
+        errorMessage.classList.remove('d-none');
+      }
+    })
+  });
+</script>
   </body>
 </html>

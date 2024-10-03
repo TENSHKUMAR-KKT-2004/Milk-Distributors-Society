@@ -52,7 +52,6 @@
                 errorMessage.textContent = data.message;
                 errorMessage.classList.remove('d-none');
             } else {
-                localStorage.setItem('token', data.token);
                 window.location.href = '/dashboard'
             }
         } catch (error) {
