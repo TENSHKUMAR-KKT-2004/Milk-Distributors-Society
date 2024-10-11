@@ -1,160 +1,157 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Milk Society</title>
-    <%- include('templates/header-links.ejs') %>  
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Milk Society</title>
+  <%- include('templates/header-links.ejs') %>
     <script>
-      window.onload = function() {
-          var element = document.getElementById('menu3');
-          element.classList.add('active');
-          var element = document.getElementById('leftmenu3');
-          element.classList.add('active1');
+      window.onload = function () {
+        var element = document.getElementById('menu3');
+        element.classList.add('active');
+        var element = document.getElementById('leftmenu3');
+        element.classList.add('active1');
       };
-  </script>  
-  </head>
+    </script>
+</head>
 
-<body>    
-<div class="container-fluid h-100 w-100 position-absolute">
+<body>
+  <div class="container-fluid h-100 w-100 position-absolute">
     <div class="row h-100">
-        <%- include('templates/left-menu.ejs') %>
+      <%- include('templates/left-menu.ejs') %>
         <div class="col-12 col-lg-10 px-0">
-            <div id="overlay" onClick="closeNav()"></div>
-            <%- include('templates/header.ejs') %>
-            <%- include('templates/mobile-menu.ejs') %>  
-<!-- content -->
-<div class="col-12 content-container position-relative">
-<div class="col-12 bg-primary-subtle p-3">
-  <div class="container">
-  <div class="row">
-    <div class="col-12 col-lg-6 d-flex">
-      <p class="m-0 align-self-center"><strong>பால் கறப்பவர்கள்</strong></p>
-    </div>
-    <div class="col-12 col-lg-6 text-lg-end text-center">
-      <a href="/milker-add" class="btn btn-success px-5">+ பால் கறப்பவரைச் சேர்க்க</a>
+          <div id="overlay" onClick="closeNav()"></div>
+          <%- include('templates/header.ejs') %>
+            <%- include('templates/mobile-menu.ejs') %>
+              <!-- content -->
+              <div class="col-12 content-container position-relative">
+                <div class="col-12 bg-primary-subtle p-3">
+                  <div class="container">
+                    <div class="row">
+                      <div class="col-12 col-lg-6 d-flex">
+                        <p class="m-0 align-self-center"><strong>பால் கறப்பவர்கள்</strong></p>
+                      </div>
+                      <div class="col-12 col-lg-6 text-lg-end text-center">
+                        <a href="/milker-add" class="btn btn-success px-5">+ பால் கறப்பவரைச் சேர்க்க</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="container">
+                  <div class="row mb-3">
+                    <div class="col-12 col-lg-6 px-3 pt-3">
+                      <ul class="nav nav-pills mytabs" role="tablist">
+                        <li id="mytab1" class="nav-item" role="presentation">
+                          <a class="nav-link show active" id="tabmenu1" data-bs-toggle="tab" data-bs-target="#tabb1"
+                            href="#tabb1" role="tab" aria-controls="tabb1" aria-selected="true">
+                            Active
+                          </a>
+                        </li>
+
+                        <li id="mytab2" class="nav-item" role="presentation">
+                          <a class="nav-link" id="tabmenu2" data-bs-toggle="tab" data-bs-target="#tabb2" href="#tabb2"
+                            role="tab" aria-controls="tabb2" aria-selected="false">
+                            Inactive
+                          </a>
+                        </li>
+                      </ul>
+                    </div>
+                    <div class="col-12 col-lg-6 px-3 pt-3 text-lg-end text-center">
+                      <form>
+                        <div class="input-group">
+                          <input type="text" class="form-control" placeholder="Search" aria-describedby="button-addon2">
+                          <button class="btn btn-primary" type="button" id="button-addon2">Search</button>
+                        </div>
+                      </form>
+                      <!--  <a href="/cowowner-add" class="btn btn-success px-5">+ Add Cow Owner</a> -->
+                    </div>
+                  </div>
+                </div>
+                <div class="col-12 px-3 pt-2 tab-content">
+                  <!-- active மாட்டுக்காரர்கள் -->
+                  <div id="tabb1" role="tabpanel" class="tab-pane fade in active show" aria-labelledby="tabmenu1">
+                    <div class="container">
+                      <table width="100%" border="1" class="table-border" cellspacing="0" cellpadding="5">
+                        <tbody>
+                          <tr>
+                            <th width="10%">S.No.</th>
+                            <th width="30%">Name</th>
+                            <th width="25%">Village</th>
+                            <th width="25%">Mobile Number</th>
+                            <th width="10%">Action</th>
+                          </tr>
+                          <tr>
+                            <% activeCollectors.forEach(function(collector, index) { %>
+                          <tr>
+                            <td>
+                              <%= index + 1 %>
+                            </td>
+                            <td>
+                              <%= collector.name %>
+                            </td>
+                            <td>
+                              <%= collector.village_name %>
+                            </td>
+                            <td>
+                              <%= collector.contact_no %>
+                            </td>
+                            <td><a href="/milkers-one/<%= collector.id %>"
+                                class="btn btn-sm px-3 btn-primary w-100">View ></a></td>
+                          </tr>
+                          <% }) %>
+                        </tbody>
+                      </table>
+
+                    </div>
+                  </div>
+                  <!-- active மாட்டுக்காரர்கள் end -->
+
+                  <!-- Inactive மாட்டுக்காரர்கள் -->
+                  <div id="tabb2" role="tabpanel" class="tab-pane fade in" aria-labelledby="tabmenu2">
+                    <div class="container">
+                      <table width="100%" border="1" class="table-border" cellspacing="0" cellpadding="5">
+                        <tbody>
+                          <tr>
+                            <th width="10%">S.No.</th>
+                            <th width="30%">Name</th>
+                            <th width="25%">Village</th>
+                            <th width="25%">Mobile Number</th>
+                            <th width="10%">Action</th>
+                          </tr>
+                          <% inactiveCollectors.forEach(function(collector, index) { %>
+                            <tr>
+                              <td>
+                                <%= index + 1 %>
+                              </td>
+                              <td>
+                                <%= collector.name %>
+                              </td>
+                              <td>
+                                <%= collector.village_name %>
+                              </td>
+                              <td>
+                                <%= collector.contact_no %>
+                              </td>
+                              <td><a href="/milkers-one/<%= collector.id %>"
+                                  class="btn btn-sm px-3 btn-primary w-100">View ></a></td>
+                            </tr>
+                            <% }) %>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                  <!-- Inactive மாட்டுக்காரர்கள் end -->
+                </div>
+              </div>
+
+
+              <!-- content end -->
+        </div>
     </div>
   </div>
-  </div>
-</div>
+  <%- include('templates/footer-links.ejs') %>
+</body>
 
-  <div class="container">
-<div class="row mb-3">
-  <div class="col-12 col-lg-6 px-3 pt-3">
-    <ul class="nav nav-pills mytabs" role="tablist">
-        <li id="mytab1" class="nav-item" role="presentation">
-            <a class="nav-link show active" id="tabmenu1" data-bs-toggle="tab" data-bs-target="#tabb1" href="#tabb1" role="tab" aria-controls="tabb1"  aria-selected="true">
-                 Active
-            </a>
-        </li>
-      
-        <li id="mytab2" class="nav-item" role="presentation">
-            <a class="nav-link" id="tabmenu2" data-bs-toggle="tab" data-bs-target="#tabb2" href="#tabb2" role="tab" aria-controls="tabb2" aria-selected="false">
-                Inactive
-            </a>
-        </li>
-    </ul>
-</div>
-<div class="col-12 col-lg-6 px-3 pt-3 text-lg-end text-center">
-  <form>
-    <div class="input-group">
-      <input type="text" class="form-control" placeholder="Search" aria-describedby="button-addon2">
-      <button class="btn btn-primary" type="button" id="button-addon2">Search</button>
-    </div>
-  </form>
- <!--  <a href="/cowowner-add" class="btn btn-success px-5">+ Add Cow Owner</a> -->
-</div>
-</div>
-</div>  
-   
-
-    <div class="col-12 px-3 pt-2 tab-content">
-          <!-- active மாட்டுக்காரர்கள் -->
-        <div id="tabb1" role="tabpanel" class="tab-pane fade in active show" aria-labelledby="tabmenu1">
-            <div class="container">
-                <table width="100%" border="1" class="table-border"  cellspacing="0" cellpadding="5">
-                    <tbody>
-                        <tr>
-                        <th width="10%">S.No.</th>
-                        <th width="30%">Name</th>
-                        <th width="25%">Village</th>
-                        <th width="25%">Mobile Number</th>
-                        <th width="10%">Action</th>
-                        </tr>
-                      <tr>
-                        <td>1</td>
-                        <td>Milker 1</td>
-                        <td>Kadamalai</td>
-                        <td>12345678</td>
-                        <td><a href="/milkers-one" class="btn btn-sm px-3 btn-primary w-100">View ></a></td>
-                      </tr>
-                      <tr>
-                        <td>2</td>
-                        <td>Milker 2</td>
-                        <td>Kumanantholu</td>
-                        <td>12345678</td>
-                        <td><a href="/milkers-one" class="btn btn-sm px-3 btn-primary w-100">View ></a></td>
-                      </tr>
-                      <tr>
-                        <td>3</td>
-                        <td>Milker 3</td>
-                        <td>Kumanantholu</td>
-                        <td>12345678</td>
-                        <td><a href="/milkers-one" class="btn btn-sm px-3 btn-primary w-100">View ></a></td>
-                      </tr>
-                    </tbody>
-                  </table>
-                
-            </div>
-        </div>
-        <!-- active மாட்டுக்காரர்கள் end -->
-
-          <!-- Inactive மாட்டுக்காரர்கள் -->
-        <div id="tabb2" role="tabpanel" class="tab-pane fade in" aria-labelledby="tabmenu2">
-            <div class="container">
-                <table width="100%" border="1" class="table-border"  cellspacing="0" cellpadding="5">
-                    <tbody>
-                        <tr>
-                        <th width="10%">S.No.</th>
-                        <th width="30%">Name</th>
-                        <th width="25%">Village</th>
-                        <th width="25%">Mobile Number</th>
-                        <th width="10%">Action</th>
-                        </tr>
-                      <tr>
-                        <td>1</td>
-                        <td>Name1</td>
-                        <td>Kumanantholu</td>
-                        <td>12345678</td>
-                        <td><a href="#" class="btn btn-sm px-3 btn-warning w-100">activate ></a></td>
-                      </tr>
-                      <tr>
-                        <td>2</td>
-                        <td>Name2</td>
-                        <td>Kumanantholu</td>
-                        <td>12345678</td>
-                        <td><a href="#" class="btn btn-sm px-3 btn-warning w-100">activate ></a></td>
-                      </tr>
-                      <tr>
-                        <td>3</td>
-                        <td>Name3</td>
-                        <td>Kumanantholu</td>
-                        <td>12345678</td>
-                        <td><a href="#" class="btn btn-sm px-3 btn-warning w-100">activate ></a></td>
-                      </tr>
-                    </tbody>
-                  </table>
-            </div>
-        </div>
-        <!-- Inactive மாட்டுக்காரர்கள் end -->
-    </div>
-</div>
-
-
-<!-- content end -->   
-        </div>   
-    </div>
-</div>
-<%- include('templates/footer-links.ejs') %>    
-  </body>
 </html>

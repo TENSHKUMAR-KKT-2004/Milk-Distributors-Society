@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Milk Society</title>
+    <%- include('templates/header-links.ejs') %>
+</head>
+
+<body>
+    <div class="container-fluid h-100 w-100 position-absolute bg-grey">
+        <div class="row h-100">
+            <div class="col-12 p-4">
+                <div class="bg-danger p-2 mb-3 text-center">
+                    <p class="text-white mb-0"><strong>மாட்டுக்காரரை திருத்தம் செய்ய</strong></p>
+                </div>
+
+                <div class="input-group mb-3">
+                    <select id="producer-selector" class="form-select" required>
+                        <option value="">-- மாட்டுக்காரர் --</option>
+                        <% producers.forEach(function(producer) { %>
+                            <option value="<%= JSON.stringify(producer) %>">
+                                <%= producer.name %>
+                            </option>
+                            <% }); %>
+                    </select>
+                </div>
+
+                <div id="error-message" class="alert alert-danger d-none" role="alert"></div>
+
+                <form id="formData" class="d-none">
+                    <div class="input-group mb-3"><input id="name" type="text" class="form-control" placeholder="Name"
+                            required></div>
+                    <div class="input-group mb-3"><input id="cow_count" type="text" class="form-control"
+                            placeholder="Cow Count" required></div>
+                    <div class="input-group mb-3"><input id="milk_price" type="text" class="form-control"
+                            placeholder="Milk Rate" required></div>
+                    <div class="input-group mb-3">
+                        <select id="milk_collector_id" class="form-select" required>
+                            <option value="">-- பால் கறப்பவர் --</option>
+                            <option value="self">Self</option>
+                            <% collectors.forEach(function(collector) { %>
+                                <option value="<%= collector.id %>">
+                                    <%= collector.name %>
+                                </option>
+                                <% }); %>
+                        </select>
+                    </div>
+                    <div class="input-group mb-3"><input id="contact_no" type="text" class="form-control"
+                            placeholder="Mobile Number"></div>
+                    <div class="input-group mb-3"><input id="address" type="text" class="form-control"
+                            placeholder="Address"></div>
+                    <div class="input-group mb-3"><input id="village_name" type="text" class="form-control"
+                            placeholder="Village"></div>
+                    <div class="row">
+                        <div class="col-12"><button type="submit" class="btn btn-success w-100">Edit</button></div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <%- include('templates/footer-links.ejs') %>
+
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                const form = document.getElementById('formData');
+                const selector = document.getElementById('producer-selector');
+
+                selector.addEventListener('change', function () {
+                    const producer = JSON.parse(selector.value);
+
+                    if (!producer) {
+                        form.classList.add('d-none');
+                        return;
+                    }
+
+                    document.getElementById('name').value = producer.name;
+                    document.getElementById('cow_count').value = producer.cow_count;
+                    document.getElementById('milk_price').value = producer.milk_price;
+                    document.getElementById('milk_collector_id').value = producer.milk_collector_id;
+                    document.getElementById('contact_no').value = producer.contact_no;
+                    document.getElementById('address').value = producer.address;
+                    document.getElementById('village_name').value = producer.village_name;
+
+                    form.classList.remove('d-none');
+                });
+
+                form.addEventListener('submit', async function (event) {
+                    event.preventDefault();
+
+                    const producerId = JSON.parse(selector.value).id;
+                    const name = document.getElementById('name').value;
+                    const cow_count = document.getElementById('cow_count').value;
+                    const milk_price = document.getElementById('milk_price').value;
+                    const milk_collector_id = document.getElementById('milk_collector_id').value;
+                    const contact_no = document.getElementById('contact_no').value;
+                    const address = document.getElementById('address').value;
+                    const village_name = document.getElementById('village_name').value;
+
+                    try {
+                        const response = await fetch('/cowowner-edit', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ id: producerId, name, cow_count, milk_price, milk_collector_id, contact_no, address, village_name }),
+                        });
+
+                        const data = await response.json();
+
+                        if (!response.ok) {
+                            const errorMessage = document.getElementById('error-message');
+                            errorMessage.textContent = data.message;
+                            errorMessage.classList.remove('d-none');
+                        }
+                        else {
+                            alert(data.message || 'Milk producer edited successfully!');
+                        }
+                    } catch (error) {
+                        console.error('Error updating producer details:', error);
+                        document.getElementById('error-message').textContent = 'Error: Could not submit data';
+                        document.getElementById('error-message').classList.remove('d-none');
+                    }
+                });
+            });
+        </script>
+</body>
+
+</html>

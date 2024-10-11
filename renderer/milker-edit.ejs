@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Milk Society</title>
+    <%- include('templates/header-links.ejs') %>
+</head>
+
+<body>
+    <div class="container-fluid h-100 w-100 position-absolute bg-grey">
+        <div class="row h-100">
+            <div class="col-12 p-4">
+                <div class="bg-danger p-2 mb-3 text-center">
+                    <p class="text-white mb-0"><strong>பால் கறப்பவரை திருத்தம் செய்ய</strong></p>
+                </div>
+
+                <div class="input-group mb-3">
+                    <select id="collector-selector" class="form-select" required>
+                        <option value="">-- பால் கறப்பவர் --</option>
+                        <% collectors.forEach(function(collector) { %>
+                            <option value="<%= JSON.stringify(collector) %>">
+                                <%= collector.name %>
+                            </option>
+                            <% }); %>
+                    </select>
+                </div>
+
+                <div id="error-message" class="alert alert-danger d-none" role="alert"></div>
+
+                <form id="formData" class="d-none">
+                    <div class="input-group mb-3"><input id="name" type="text" class="form-control"
+                        placeholder="பால் கறப்பவர் Name" required></div>
+                    <div class="input-group mb-3"><input id="contact_no" type="text" class="form-control"
+                        placeholder="Mobile Number" required></div>
+                    <div class="input-group mb-3"><input id="address" type="text" class="form-control" placeholder="Address">
+                    </div>
+                    <div class="input-group mb-3"><input id="village_name" type="text" class="form-control" placeholder="Village">
+                    </div>
+                    <div class="input-group mb-3"><input id="salary" type="number" class="form-control" placeholder="Salary"
+                        required>
+                    </div>
+                    <div class="row">
+                      <div class="col-12"><button type="submit" class="btn btn-success w-100">Save</button></div>
+                    </div>
+                  </form>
+            </div>
+        </div>
+    </div>
+    <%- include('templates/footer-links.ejs') %>
+
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                const form = document.getElementById('formData');
+                const selector = document.getElementById('collector-selector');
+
+                selector.addEventListener('change', function () {
+                    const collector = JSON.parse(selector.value);
+
+                    if (!collector) {
+                        form.classList.add('d-none');
+                        return;
+                    }
+
+                    document.getElementById('name').value = collector.name;
+                    document.getElementById('contact_no').value = collector.contact_no;
+                    document.getElementById('address').value = collector.address;
+                    document.getElementById('village_name').value = collector.village_name;
+                    document.getElementById('salary').value = collector.salary;
+
+                    form.classList.remove('d-none');
+                });
+
+                form.addEventListener('submit', async function (event) {
+                    event.preventDefault();
+
+                    const collectorId = JSON.parse(selector.value).id;
+                    const name = document.getElementById('name').value;
+                    const salary = document.getElementById('salary').value;
+                    const contact_no = document.getElementById('contact_no').value;
+                    const address = document.getElementById('address').value;
+                    const village_name = document.getElementById('village_name').value;
+
+                    try {
+                        const response = await fetch('/milker-edit', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ id: collectorId, name, contact_no, address, village_name , salary }),
+                        });
+
+                        const data = await response.json();
+
+                        if (!response.ok) {
+                            const errorMessage = document.getElementById('error-message');
+                            errorMessage.textContent = data.message;
+                            errorMessage.classList.remove('d-none');
+                        }
+                        else {
+                            alert(data.message || 'Milk collector edited successfully!');
+                        }
+                    } catch (error) {
+                        console.error('Error updating collector details:', error);
+                        document.getElementById('error-message').textContent = 'Error: Could not submit data';
+                        document.getElementById('error-message').classList.remove('d-none');
+                    }
+                });
+            });
+        </script>
+</body>
+
+</html>

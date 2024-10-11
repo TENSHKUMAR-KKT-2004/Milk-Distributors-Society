@@ -27,9 +27,20 @@
 <div class="col-12 content-container position-relative">
 <div class="col-12 	bg-primary-subtle p-3">
   <div class="container">
+    <div id="toast-container" aria-live="polite" aria-atomic="true"
+    class="position-fixed bottom-0 end-0 p-3" style="z-index: 11;">
+    <!-- Toast will be injected here -->
+  </div>
   <div class="row g-2">
     <div class="col-12 col-lg-6 text-center text-lg-start h-100">
-      <h4 class="mt-1"><strong>பால் கறப்பவர்1, Kadamalai</strong></h4>
+      <h4 class="mt-1"><strong><%= collector.name %>, <%= collector.village_name %> (<%= collector.contact_no %>)</strong></h4>
+      <% if (collector.is_active==1) { %>
+        <button class="btn btn-sm px-3 btn-danger w-100"
+          onclick="confirmActivation('/milker-deactivate/<%= collector.id %>')">Deactivate</button>
+        <% } else { %>
+          <button class="btn btn-sm px-3 btn-success w-100"
+            onclick="confirmActivation('/milker-activate/<%= collector.id %>')">Activate</button>
+          <% } %>
     </div>
     <div class="col-12 col-lg-6 text-center text-lg-end">
       <form class="row g-2 float-end">
@@ -237,9 +248,7 @@
 
     </div>
   </div>
- 
 
-  
 </div>
 <div class="container mt-1">
   <div class="col-12 col-lg-6">
@@ -256,5 +265,53 @@
     </div>
 </div>
 <%- include('templates/footer-links.ejs') %>    
+
+<script>
+  async function confirmActivation(url) {
+    const confirmed = confirm("Are you sure you want to activate this cow milk collector?");
+    if (!confirmed) {
+      return false;
+    }
+
+    try {
+      const response = await fetch(url, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      });
+
+      const data = await response.json();
+
+      if (response.status === 200) {
+        showToast('Success', data.message || "cow milk collector activated successfully!", 'success');
+      } else if (response.status === 404) {
+        alert('404')
+        showToast('Error', data.message || "cow milk collector not found.", 'danger');
+      } else if (response.status === 500) {
+        alert('500')
+        showToast('Error', data.message || "Internal Server Error. Please try again later.", 'danger');
+      }
+    } catch (error) {
+      console.error('Error during activation:', error);
+    }
+  }
+  function showToast(title, message, type) {
+    const toastContainer = document.getElementById('toast-container');
+    const toastTemplate = `
+    <div class="toast align-items-center text-bg-${type} border-0" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="d-flex">
+            <div class="toast-body">
+                <strong>${title}</strong>: ${message}
+            </div>
+            <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+    </div>
+`;
+    toastContainer.innerHTML = toastTemplate;
+    const toast = new bootstrap.Toast(toastContainer.querySelector('.toast'));
+    toast.show();
+  }
+</script>
   </body>
 </html>
