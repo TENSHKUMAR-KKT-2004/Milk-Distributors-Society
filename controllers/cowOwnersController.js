@@ -116,7 +116,7 @@ const updateCowOwner = async (req, res) => {
   try {
     const query = `
     UPDATE milk_producers
-    SET name = ?, cow_count = ?, milk_price = ?, milk_collector_id = ?, contact_no = ?, address = ?, village_name = ?
+    SET name = ?, cow_count = ?, milk_price = ?, milk_collector_id = ?, contact_no = ?, address = ?, village_name = ?, updated_at = CURRENT_TIMESTAMP
     WHERE id = ?
   `;
 
@@ -137,7 +137,7 @@ const activateCowOwner = async (req,res)=>{
   try {
     const query = `
     UPDATE milk_producers
-    SET is_active = 1
+    SET is_active = 1, updated_at = CURRENT_TIMESTAMP
     WHERE id = ?
   `;
     db.get(query, [producerId], (err, producer) => {
@@ -163,7 +163,7 @@ const deactivateCowOwner = async (req,res)=>{
   try {
     const query = `
     UPDATE milk_producers
-    SET is_active = 0
+    SET is_active = 0, updated_at = CURRENT_TIMESTAMP
     WHERE id = ?
   `;
     db.get(query, [producerId], (err, producer) => {

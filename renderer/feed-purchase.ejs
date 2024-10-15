@@ -1,164 +1,346 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Milk Society</title>
-    <%- include('templates/header-links.ejs') %>  
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Milk Society</title>
+  <%- include('templates/header-links.ejs') %>
     <script>
-      window.onload = function() {
-          var element = document.getElementById('menu5');
-          element.classList.add('active');
-          var element = document.getElementById('leftmenu5');
-          element.classList.add('active1');
+      window.onload = function () {
+        var element = document.getElementById('menu5');
+        element.classList.add('active');
+        var element = document.getElementById('leftmenu5');
+        element.classList.add('active1');
       };
-  </script>  
+    </script>
 
-<style>
+    <style>
 
-</style>
-  </head>
+    </style>
+</head>
 
-<body>    
-<div class="container-fluid h-100 w-100 position-absolute">
+<body>
+  <div class="container-fluid h-100 w-100 position-absolute">
     <div class="row h-100">
-        <%- include('templates/left-menu.ejs') %>
+      <%- include('templates/left-menu.ejs') %>
         <div class="col-12 col-lg-10 px-0">
-            <div id="overlay" onClick="closeNav()"></div>
-            <%- include('templates/header.ejs') %>
-            <%- include('templates/mobile-menu.ejs') %>  
-<!-- content -->
-<div class="col-12 content-container position-relative">
+          <div id="overlay" onClick="closeNav()"></div>
+          <%- include('templates/header.ejs') %>
+            <%- include('templates/mobile-menu.ejs') %>
+              <!-- content -->
+              <div class="col-12 content-container position-relative">
 
-  <div class="col-12 bg-primary-subtle p-3 justify-content-center">
-    <div class="container row g-2 mx-auto">
-      <div class="col-12 col-lg-6 pt-2">
-        <p class="m-0"><strong>தீவனங்கள் கொள்முதல்</strong></p>
-      </div>
-  
-      <div class="col-12 col-lg-6 text-center text-lg-end">
-        <form class="row g-2 float-end">
-          <div class="col-auto form-group">
-            <input type="date" class="form-control">
-          </div>
-        </form>
-      </div>
+                <div class="col-12 bg-primary-subtle p-3 justify-content-center">
+                  <div class="container row g-2 mx-auto">
+                    <div class="col-12 col-lg-6 pt-2">
+                      <p class="m-0"><strong>தீவனங்கள் கொள்முதல்</strong></p>
+                    </div>
+
+                    <div class="col-12 col-lg-6 text-center text-lg-end">
+                      <form class="row g-2 float-end">
+                        <div class="col-auto form-group">
+                          <input type="date" id="date" class="form-control">
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+                <div id="error-message" class="alert alert-danger d-none" role="alert"></div>
+
+                <form id="formData">
+                  <div class="container mt-3">
+                    <div class="row mb-2 mt-4">
+                      <div class="col-12 col-lg-6  mb-3">
+                        <input type="text" id="company_name" class="form-control" placeholder="Company Name">
+                      </div>
+
+                      <div class="col-12 col-lg-6 mb-3">
+                        <select id="feed-selector" id="feed_id" class="form-select">
+                          <option selected>-- select தீவனம்--</option>
+                          <% feeds.forEach(function(feed) { %>
+                            <option value="<%= JSON.stringify(feed) %>">
+                              <%= feed.name %>
+                            </option>
+                            <% }); %>
+                        </select>
+                      </div>
+
+                      <div class="col-12 col-lg-6  mb-3">
+                        <input type="text" id="cost_price" class="form-control" placeholder="Price">
+                      </div>
+
+                      <div class="col-12 col-lg-6  mb-3">
+                        <input type="text" id="purchase_quantity" class="form-control" placeholder="Purchase Qnty"
+                          oninput="updateTotalPrice()">
+                      </div>
+
+                      <div class="col-12 col-lg-6  mb-3">
+                        <input type="text" id="total_price" class="form-control" placeholder="Total Price">
+                      </div>
+
+                      <div class="col-12 col-lg-6  mb-3">
+                        <input type="text" id="invoice_no" class="form-control" placeholder="Invoice Number">
+                      </div>
+
+                      <div class="col-12 col-lg-6  mb-3">
+                        <input type="text" id="sales_price" class="form-control" placeholder="Sales Price">
+                      </div>
+
+                      <div class="col-12 col-lg-6  mb-3">
+                        <input type="submit" class="form-control btn btn-primary" value="+ add">
+                      </div>
+                    </div>
+                  </div>
+                </form>
+
+
+                <div class="container">
+                  <p class="mt-3"><strong>Feed Purchase List</strong> </p>
+                  <table width="100%" border="1" class="table-border" cellspacing="0" cellpadding="5">
+                    <tbody>
+                      <tr>
+                        <th width="5%">S.No.</th>
+                        <th width="10%">Date</th>
+                        <th width="30%">Company Name</th>
+                        <th width="25%">Feed</th>
+                        <th width="5%" align="center">Qnty</th>
+                        <th width="5%">Price</th>
+                        <th width="10%" align="center">Total</th>
+                        <th width="10%">Action</th>
+                      </tr>
+                      <% purchases.forEach((purchase, index)=> { %>
+                        <tr>
+                          <td>
+                            <%= index + 1 %>
+                          </td>
+                          <td align="left">
+                            <%= new Date(purchase.purchase_date).toLocaleDateString('en-GB') %>
+                          </td>
+                          <td>
+                            <%= purchase.company_name %>
+                          </td>
+                          <td>
+                            <%= purchase.feed_name %>
+                          </td>
+                          <td align="center">
+                            <%= purchase.quantity %>
+                          </td>
+                          <td align="right">
+                            <%= parseFloat(purchase.cost_price).toFixed(2) %>
+                          </td>
+                          <td align="right">
+                            <%= purchase.total_price %>
+                          </td>
+                          <td align="right">
+                            <button type="button" class="form-control btn btn-danger btn-sm" data-bs-toggle="modal"
+                              data-bs-target="#editPurchaseModal"
+                              onclick="loadPurchaseData(<%= JSON.stringify(purchase) %>)">Edit</button>
+                          </td>
+                        </tr>
+                        <% }) %>
+                    </tbody>
+                  </table>
+
+                  <div class="col-12 mt-3">
+                    <div class="row justify-content-end">
+
+                      <div class="col-12 col-lg-4">
+                        <input type="submit" class="form-control w-100 btn btn-success" value="Save">
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+              <!-- content end -->
+        </div>
+
     </div>
   </div>
 
-    <div class="container mt-3">
-      <div class="row mb-2 mt-4">
-        <div class="col-12 col-lg-6  mb-3">
-          <input type="text" class="form-control" placeholder="Company Name">
+  <!-- Edit Purchase Modal -->
+  <div class="modal fade" id="editPurchaseModal" tabindex="-1" aria-labelledby="editPurchaseModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="editPurchaseModalLabel">Edit Purchase Record</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-
-        <div class="col-12 col-lg-6 mb-3">
-          <select class="form-select">
-            <option selected>-- select தீவனம்--</option>
-            <option value="1">பருத்தி விதை (பெரியது)</option>
-            <option value="2">பருத்தி விதை (சிறியது)</option>
-            <option value="3">பருத்தி புண்ணாக்கு</option>
-            <option value="4">கம்பு மாவு</option>
-            <option value="5">குச்சி புண்ணாக்கு</option>
-          </select>
-        </div>
-
-        <div class="col-12 col-lg-6  mb-3">
-          <input type="text" class="form-control" placeholder="Price">
-        </div>
-    
-        <div class="col-12 col-lg-6  mb-3">
-          <input type="text" class="form-control" placeholder="Purchase Qnty">
-        </div>
-    
-        <div class="col-12 col-lg-6  mb-3">
-          <input type="text" class="form-control" placeholder="Total Price">
-        </div>
-
-        <div class="col-12 col-lg-6  mb-3">
-          <input type="text" class="form-control" placeholder="Invoice Number">
-        </div>
-
-        <div class="col-12 col-lg-6  mb-3">
-          <input type="text" class="form-control" placeholder="Sales Price">
-        </div>
-
-        <div class="col-12 col-lg-6  mb-3">
-          <input type="submit" class="form-control btn btn-primary" value="+ add">
-        </div>
-    
-      
-    
-   
-      </div>
-    </div>
-
-    <div class="container">
-      <p class="mt-3"><strong>Feed Purchase List</strong> </p>
-      <table width="100%" border="1" class="table-border"  cellspacing="0" cellpadding="5">
-        <tbody>
-            <tr>
-            <th width="5%">S.No.</th>
-            <th width="10%">Date</th>
-            <th width="30%">Company Name</th>
-            <th width="25%">Feed</th>
-            <th width="5%" align="center">Qnty</th>
-            <th width="5%">Price</th>
-            <th width="10%">Total</th>
-            <th width="10%">Action</th>
-            </tr>
-          <tr>
-            <td>1</td>
-            <td align="left">02-09-2024</td>
-            <td>Aavin</td>
-            <td>Kambu Mavu</td>
-            <td align="center">50</td>
-            <td align="right">2500.00</td>
-            <td align="right">125000.00</td>
-            <td align="right"><input type="submit" class="form-control btn btn-danger btn-sm" value="Edit"></td>
-          </tr>
-          <tr>
-            <td>2</td>
-            <td align="left">03-09-2024</td>
-            <td>Aavin</td>
-            <td>Uppu chippam</td>
-            <td align="center">20</td>
-            <td align="right">1500.00</td>
-            <td align="right">30000.00</td>
-            <td align="right"><input type="submit" class="form-control btn btn-danger btn-sm" value="Edit"></td>
-          </tr>
-          <tr>
-            <td>3</td>
-            <td align="left">04-09-2024</td>
-            <td>Aavin</td>
-            <td>Paruthi Punnakku (small)</td>
-            <td align="center">10</td>
-            <td align="right">3200.00</td>
-            <td align="right">32000.00</td>
-            <td align="right"><input type="submit" class="form-control btn btn-danger btn-sm" value="Edit"></td>
-          </tr>
-        </tbody>
-      </table>
-
-        <div class="col-12 mt-3">
-          <div class="row justify-content-end">
-            
-            <div class="col-12 col-lg-4">
-              <input type="submit" class="form-control w-100 btn btn-success" value="Save">
+        <div class="modal-body">
+          <form id="editPurchaseForm">
+            <div class="mb-3">
+              <label for="editDate" class="form-label">Date</label>
+              <input type="date" id="editDate" class="form-control" placeholder="Company Name">
+              <input type="hidden" id="purchase_id" class="form-control">
             </div>
-          </div>
+            <div class="mb-3">
+              <label for="editCompanyName" class="form-label">Company Name</label>
+              <input type="text" id="editCompanyName" class="form-control" placeholder="Company Name">
+            </div>
+            <div class="mb-3">
+              <label for="editFeedSelector" class="form-label">Feed</label>
+              <select id="editFeedSelector" class="form-select">
+                <option selected>-- Select Feed --</option>
+                <% feeds.forEach(function(feed) { %>
+                  <option value="<%= feed.id %>">
+                    <%= feed.name %>
+                  </option>
+                  <% }); %>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label for="editCostPrice" class="form-label">Price</label>
+              <input type="text" id="editCostPrice" class="form-control" placeholder="Price">
+            </div>
+            <div class="mb-3">
+              <label for="editPurchaseQuantity" class="form-label">Purchase Quantity</label>
+              <input type="text" id="editPurchaseQuantity" class="form-control" placeholder="Purchase Quantity"
+                oninput="updateEditTotalPrice()">
+            </div>
+            <div class="mb-3">
+              <label for="editTotalPrice" class="form-label">Total Price</label>
+              <input type="text" id="editTotalPrice" class="form-control" placeholder="Total Price" readonly>
+            </div>
+            <div class="mb-3">
+              <label for="editInvoiceNo" class="form-label">Invoice Number</label>
+              <input type="text" id="editInvoiceNo" class="form-control" placeholder="Invoice Number">
+            </div>
+            <div class="mb-3">
+              <label for="editSalesPrice" class="form-label">Sales Price</label>
+              <input type="text" id="editSalesPrice" class="form-control" placeholder="Sales Price">
+            </div>
+            <button type="submit" class="btn btn-primary">Save changes</button>
+          </form>
         </div>
-      
+      </div>
+    </div>
   </div>
 
 
-</div>
-<!-- content end -->   
-        </div>   
+  <%- include('templates/footer-links.ejs') %>
 
-    </div>
-</div>
-<%- include('templates/footer-links.ejs') %>    
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const form = document.getElementById('formData');
+        const selector = document.getElementById('feed-selector');
 
-  </body>
+        selector.addEventListener('change', function () {
+          const feed = JSON.parse(selector.value)
+
+          document.getElementById('cost_price').value = feed.cost_price;
+          document.getElementById('sales_price').value = feed.selling_price;
+        });
+
+        form.addEventListener('submit', async function (event) {
+          event.preventDefault();
+
+          const feed_id = JSON.parse(selector.value).id;
+          const date = document.getElementById('date').value;
+          const company_name = document.getElementById('company_name').value;
+          const cost_price = document.getElementById('cost_price').value;
+          const purchase_quantity = document.getElementById('purchase_quantity').value;
+          const total_price = document.getElementById('total_price').value;
+          const invoice_no = document.getElementById('invoice_no').value;
+          const sales_price = document.getElementById('sales_price').value;
+
+          try {
+            const response = await fetch('/feed-purchase-add', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ date, company_name, feed_id, cost_price, purchase_quantity, total_price, invoice_no, sales_price }),
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+              const errorMessage = document.getElementById('error-message');
+              errorMessage.textContent = data.message;
+              errorMessage.classList.remove('d-none');
+            }
+            else {
+              alert(data.message || 'cattle feed product purchase record added successfully!');
+            }
+          } catch (error) {
+            console.error('Error updating producer details:', error);
+            document.getElementById('error-message').textContent = 'Error: Could not submit data';
+            document.getElementById('error-message').classList.remove('d-none');
+          }
+        })
+      })
+
+      function updateTotalPrice() {
+        const quantity = document.getElementById('purchase_quantity').value;
+        const price = document.getElementById('cost_price').value;
+        const totalPriceInput = document.getElementById('total_price');
+
+        const totalPrice = quantity * price;
+
+        totalPriceInput.value = isNaN(totalPrice) ? '' : totalPrice.toFixed(2);
+      }
+
+      const today = new Date();
+      const formattedDate = today.toISOString().split('T')[0];
+      document.getElementById('date').value = formattedDate;
+
+      function loadPurchaseData(purchase) {
+        document.getElementById('editDate').value = purchase.purchase_date;
+        document.getElementById('editCompanyName').value = purchase.company_name;
+        document.getElementById('editFeedSelector').value = purchase.feed_id;
+        document.getElementById('editCostPrice').value = purchase.cost_price;
+        document.getElementById('editPurchaseQuantity').value = purchase.quantity;
+        document.getElementById('editTotalPrice').value = purchase.total_price;
+        document.getElementById('editInvoiceNo').value = purchase.invoice_number;
+        document.getElementById('editSalesPrice').value = purchase.sales_price;
+        document.getElementById('purchase_id').value = purchase.id;
+      }
+
+      function updateEditTotalPrice() {
+        const quantity = document.getElementById('editPurchaseQuantity').value;
+        const price = document.getElementById('editCostPrice').value;
+        const totalPriceInput = document.getElementById('editTotalPrice');
+
+        const totalPrice = quantity * price;
+        totalPriceInput.value = isNaN(totalPrice) ? '' : totalPrice.toFixed(2);
+      }
+
+      document.getElementById('editPurchaseForm').addEventListener('submit', async function (event) {
+        event.preventDefault();
+
+        const company_name = document.getElementById('editCompanyName').value;
+        const purchase_date = document.getElementById('editDate').value;
+        const feed_id = document.getElementById('editFeedSelector').value;
+        const cost_price = document.getElementById('editCostPrice').value;
+        const quantity = document.getElementById('editPurchaseQuantity').value;
+        const total_price = document.getElementById('editTotalPrice').value;
+        const invoice_no = document.getElementById('editInvoiceNo').value;
+        const sales_price = document.getElementById('editSalesPrice').value;
+        const purchase_id = document.getElementById('purchase_id').value
+
+        try {
+          const response = await fetch(`/feed-purchase-edit`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ id: purchase_id, company_name, purchase_date, feed_id, cost_price, quantity, total_price, invoice_no, sales_price }),
+          });
+
+          const data = await response.json();
+
+          if (!response.ok) {
+            const errorMessage = document.getElementById('error-message');
+            errorMessage.textContent = data.message;
+            errorMessage.classList.remove('d-none');
+          }
+          else {
+            alert(data.message || 'cattle feed product purchase record added successfully!');
+          }
+        } catch (error) {
+          console.error('Error updating purchase:', error);
+        }
+      });
+    </script>
+
+</body>
+
 </html>

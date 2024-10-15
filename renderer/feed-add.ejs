@@ -14,20 +14,61 @@
           <div class="bg-primary p-2 mb-3 text-center">
             <p class="text-white mb-0"><strong>தீவனங்களை சேர்க்க</strong></p>
           </div>
-          
-          <form>
-            <div class="input-group mb-3"><input type="text" class="form-control" placeholder="தீவனத்தின் பெயர்"></div>
-            <div class="input-group mb-3"><input type="text" class="form-control" placeholder="தீவனத்தின் கொள்முதல் விலை"></div>
-            <div class="input-group mb-3"><input type="text" class="form-control" placeholder="தீவனத்தின் விற்பனை விலை"></div>
-            <div class="input-group mb-3"><input type="text" class="form-control" placeholder="இருப்பு"></div>
+          <div id="error-message" class="alert alert-danger d-none" role="alert"></div>
+          <form id="formData">
+            <div class="input-group mb-3"><input type="text" id="name" class="form-control" placeholder="தீவனத்தின் பெயர்"></div>
+            <div class="input-group mb-3"><input type="text" id="cost_price" class="form-control" placeholder="தீவனத்தின் கொள்முதல் விலை"></div>
+            <div class="input-group mb-3"><input type="text" id="selling_price" class="form-control" placeholder="தீவனத்தின் விற்பனை விலை"></div>
+            <div class="input-group mb-3"><input type="text" id="stock_quantity" class="form-control" placeholder="இருப்பு"></div>
+            <div class="row">
+              <div class="col-12"><button type="submit" class="btn btn-success w-100">Save</button></div>
+            </div>
           </form>
-          <div class="row">
-            <div class="col-6"><a href="#" class="btn btn-danger w-100">Edit</a></div>
-            <div class="col-6"><a href="#" class="btn btn-success w-100">Save</a></div>
-          </div>
+          
         </div>   
     </div>
 </div>
 <%- include('templates/footer-links.ejs') %>    
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const form = document.getElementById('formData');
+    form.addEventListener('submit', async function (event) {
+      event.preventDefault();
+
+      document.getElementById('error-message').classList.add('d-none');
+
+      const name = document.getElementById('name').value;
+      const cost_price = document.getElementById('cost_price').value;
+      const selling_price = document.getElementById('selling_price').value;
+      const stock_quantity = document.getElementById('stock_quantity').value
+
+      try {
+        const response = await fetch('/feed-add', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ name, cost_price, selling_price, stock_quantity}),
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+          const errorMessage = document.getElementById('error-message');
+          errorMessage.textContent = data.message;
+          errorMessage.classList.remove('d-none');
+        }
+        else {
+          alert(data.message || 'Cattle feed product added successfully!');
+        }
+      } catch (error) {
+        console.error('Error:', error);
+        const errorMessage = document.getElementById('error-message');
+        errorMessage.textContent = 'Error: Could not submit data';
+        errorMessage.classList.remove('d-none');
+      }
+    })
+  });
+</script>
   </body>
 </html>
