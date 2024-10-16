@@ -1,8 +1,7 @@
 const sqlite3 = require('sqlite3').verbose();
 const path = require('path');
 
-const dbPath = path.resolve(__dirname, '../db/milk_distributor.db');
-const db = new sqlite3.Database(dbPath, (err) => {
+const db = new sqlite3.Database('./db/milk_distributor.db', (err) => {
   if (err) {
     console.error('Error when creating the database', err);
   } else {
