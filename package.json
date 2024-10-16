@@ -3,9 +3,28 @@
   "productName": "Milk Distributors Society",
   "version": "1.0.0",
   "description": "Freelancing Project",
-  "main": "app.js",
+  "main": "src/app.js",
   "scripts": {
-    "start": "electron ."
+    "start": "electron .",
+    "build": "electron-builder" 
+  },
+  "build": {
+    "appId": "com.milk-distributors-society.id",
+    "productName": "MilkDistributorsSociety",
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        }
+      ]
+    },
+    "files": [
+      "src/**/*",
+      "node_modules/**/*"
+    ]
   },
   "author": "TENSHKUMAR K",
   "license": "ISC",
@@ -13,9 +32,12 @@
     "bcrypt": "^5.1.1",
     "dotenv": "^16.4.5",
     "ejs": "^3.1.10",
-    "electron": "^32.0.2",
     "express": "^4.21.0",
     "express-session": "^1.18.0",
     "sqlite3": "^5.1.7"
+  },
+  "devDependencies": {
+    "electron": "^32.0.2",
+    "electron-builder": "^25.1.8"
   }
 }

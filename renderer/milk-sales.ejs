@@ -1,212 +1,297 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Milk Society</title>
-    <%- include('templates/header-links.ejs') %>  
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Milk Society</title>
+  <%- include('templates/header-links.ejs') %>
     <script>
-      window.onload = function() {
-          var element = document.getElementById('menu6');
-          element.classList.add('active');
-          var element = document.getElementById('leftmenu6');
-          element.classList.add('active1');
+      window.onload = function () {
+        var element = document.getElementById('menu6');
+        element.classList.add('active');
+        var element = document.getElementById('leftmenu6');
+        element.classList.add('active1');
       };
-  </script>  
+    </script>
 
-<style>
-  .search-menu.show {
-      max-height: 200px;
-      overflow-y: auto;
-  }
-</style>
-  </head>
+    <style>
+      .search-menu.show {
+        max-height: 200px;
+        overflow-y: auto;
+      }
+    </style>
+</head>
 
-<body>    
-<div class="container-fluid h-100 w-100 position-absolute">
+<body>
+  <div class="container-fluid h-100 w-100 position-absolute">
     <div class="row h-100">
-        <%- include('templates/left-menu.ejs') %>
+      <%- include('templates/left-menu.ejs') %>
         <div class="col-12 col-lg-10 px-0">
-            <div id="overlay" onClick="closeNav()"></div>
-            <%- include('templates/header.ejs') %>
-            <%- include('templates/mobile-menu.ejs') %>  
-<!-- content -->
-<div class="col-12 content-container position-relative">
-<div class="col-12 bg-primary-subtle p-3 justify-content-center">
-  <div class="container row g-2 mx-auto">
-    <div class="col-12 col-lg-6 pt-2">
-      <div class="form-check form-check-inline">
-        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="morning" value="option1" checked>
-        <label class="form-check-label" for="morning">காலை</label>
-      </div>
-      <div class="form-check form-check-inline">
-        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="evening" value="option2">
-        <label class="form-check-label" for="evening">மாலை</label>
-      </div>
-  </div>
+          <div id="overlay" onClick="closeNav()"></div>
+          <%- include('templates/header.ejs') %>
+            <%- include('templates/mobile-menu.ejs') %>
+              <!-- content -->
+              <div class="col-12 content-container position-relative">
+                <form id="milk-sale-form">
 
-    <div class="col-12 col-lg-6 text-center text-lg-end">
-      <form class="row g-2 float-end">
-        <div class="col-auto form-group">
-          <input type="date" class="form-control">
+                  <div class="col-12 bg-primary-subtle p-3 justify-content-center">
+                    <div class="container row g-2 mx-auto">
+                      <div class="col-12 col-lg-6 pt-2">
+                        <div class="form-check form-check-inline">
+                          <input class="form-check-input" type="radio" name="collection_time" id="morning"
+                            value="morning" checked>
+                          <label class="form-check-label" for="morning">காலை</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                          <input class="form-check-input" type="radio" name="collection_time" id="evening"
+                            value="evening">
+                          <label class="form-check-label" for="evening">மாலை</label>
+                        </div>
+                      </div>
+
+                      <div class="col-12 col-lg-6 text-center text-lg-end">
+                        <!-- <form class="row g-2 float-end"> -->
+                        <div class="col-auto form-group">
+                          <input type="date" id="date" name="date" class="form-control" required>
+                        </div>
+                        <!-- </form> -->
+                      </div>
+                    </div>
+                  </div>
+
+                  <div id="error-message" class="alert alert-danger d-none" role="alert"></div>
+
+                  <div class="container mt-3">
+                    <div class="row mb-2 mt-4">
+                      <div class="col-12 col-lg-6 mb-3">
+                        <select class="form-select" id="company_id" name="company_id" required>
+                          <option selected>-- select பால் கம்பெனி--</option>
+                          <% companies.forEach(function(company) { %>
+                            <option value="<%= company.id %>" data-incentive="<%= company.incentive_price %>">
+                              <%= company.name %>
+                            </option>
+                            <% }); %>
+                              <option value="other">other</option>
+                        </select>
+                      </div>
+
+                      <div class="col-12 col-lg-6  mb-3">
+                        <input type="text" id="distributed_milk_qty" name="distributed_milk_qty" class="form-control"
+                          placeholder="பால் அளவு (ltrs)" required>
+                      </div>
+
+                      <div class="col-12 col-lg-6  mb-3">
+                        <input type="text" id="FAT" name="FAT" class="form-control" placeholder="FAT" required>
+                      </div>
+
+                      <div class="col-12 col-lg-6  mb-3">
+                        <input type="text" id="SNF" name="SNF" class="form-control" placeholder="SNF" required>
+                      </div>
+
+                      <div class="col-12 col-lg-6  mb-3">
+                        <input type="text" id="price_per_liter" name="price_per_liter" class="form-control"
+                          placeholder="பால் விலை" required>
+                      </div>
+
+                      <div class="col-12 col-lg-6  mb-3">
+                        <input type="text" id="incentive_price" name="incentive_price" class="form-control"
+                          placeholder="ஊக்க விலை" readonly>
+                      </div>
+
+                      <div class="col-12 col-lg-6  mb-3">
+                        <input type="text" id="total_amt" name="total_amt" class="form-control"
+                          placeholder="மொத்த Amount" required>
+                      </div>
+
+                      <div class="col-12 col-lg-6  mb-3">
+                        <input type="submit" class="form-control btn btn-success" value="Save">
+                      </div>
+                    </div>
+                  </div>
+                </form>
+
+                <div class="container">
+                  <p class="mt-3"><strong>Recent Transaction</strong> </p>
+                  <table width="100%" border="1" class="table-border" cellspacing="0" cellpadding="5">
+                    <tbody>
+                      <tr>
+                        <th width="5%">எண்</th>
+                        <th width="8%">தேதி</th>
+                        <th width="10%">பால் கம்பெனி</th>
+                        <th width="10%">காலை(லி) </th>
+                        <th width="10%">மாலை(லி) </th>
+                        <th width="10%">மொத்த பால்</th>
+                        <th width="10%">பால் விலை</th>
+                        <th width="10%">மொத்த Amount</th>
+                        <!-- <th width="10%">Action</th> -->
+                      </tr>
+                      <tr>
+                        <td>1</td>
+                        <td>01-09-2024</td>
+                        <td>Aavin</td>
+                        <td>9.5</td>
+                        <td>8.4</td>
+                        <td>17.9</td>
+                        <td>34.00</td>
+                        <td>532.00</td>
+                        <!-- <td><a href="/milk-edit" class="btn btn-sm px-3 btn-primary w-100">Edit ></a></td> -->
+                      </tr>
+
+                      <tr>
+                        <td>2</td>
+                        <td>01-09-2024</td>
+                        <td>Aavin</td>
+                        <td>9.5</td>
+                        <td>8.4</td>
+                        <td>17.9</td>
+                        <td>34.00</td>
+                        <td>532.00</td>
+                        <!-- <td><a href="/milk-edit" class="btn btn-sm px-3 btn-primary w-100">Edit ></a></td> -->
+                      </tr>
+
+                      <tr>
+                        <td>3</td>
+                        <td>01-09-2024</td>
+                        <td>Aavin</td>
+                        <td>9.5</td>
+                        <td>8.4</td>
+                        <td>17.9</td>
+                        <td>34.00</td>
+                        <td>532.00</td>
+                        <!-- <td><a href="/milk-edit" class="btn btn-sm px-3 btn-primary w-100">Edit ></a></td> -->
+                      </tr>
+                      <tr>
+                        <td>4</td>
+                        <td>01-09-2024</td>
+                        <td>Aavin</td>
+                        <td>9.5</td>
+                        <td>8.4</td>
+                        <td>17.9</td>
+                        <td>34.00</td>
+                        <td>532.00</td>
+                        <!-- <td><a href="/milk-edit" class="btn btn-sm px-3 btn-primary w-100 ">Edit ></a></td> -->
+                      </tr>
+                      <tr>
+                        <td colspan="6" align="right">மொத்தம்</td>
+                        <td>244.6</td>
+                        <td>5000.00</td>
+                        <!-- <td></td> -->
+                      </tr>
+
+                    </tbody>
+                  </table>
+                </div>
+
+
+              </div>
+              <!-- content end -->
         </div>
-      </form>
+
     </div>
   </div>
-</div>
-
-
-
-    <div class="container mt-3">
-      <div class="row mb-2 mt-4">
-        <div class="col-12 col-lg-6 mb-3">
-          <select class="form-select">
-            <option selected>-- select பால் கம்பெனி--</option>
-            <option value="1">Aavin</option>
-            <option value="2">VGP</option>
-            <option value="3">other</option>
-          </select>
-        </div>
-    
-  
-    
-        <div class="col-12 col-lg-6  mb-3">
-          <input type="text" class="form-control" placeholder="பால் அளவு (ltrs)">
-        </div>
-    
-        <div class="col-12 col-lg-6  mb-3">
-          <input type="text" class="form-control"  placeholder="பால் விலை">
-        </div>
-    
-        <div class="col-12 col-lg-6  mb-3">
-          <input type="text" class="form-control" placeholder="மொத்த Amount">
-        </div>
-    
-      
-    
-        <div class="col-12 col-lg-6 offset-lg-6 mb-3">
-          <div class="row">
-            <div class="col-6">
-              <input type="submit" class="form-control btn btn-danger" value="Edit">
-            </div>
-            <div class="col-6">
-              <input type="submit" class="form-control btn btn-success" value="Save">
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="container">
-      <p class="mt-3"><strong>Recent Transaction</strong> </p>
-      <table width="100%" border="1" class="table-border" cellspacing="0" cellpadding="5">
-        <tbody>
-            <tr>
-            <th width="5%">எண்</th>
-            <th width="8%">தேதி</th>
-            <th width="10%">பால் கம்பெனி</th>
-            <th width="10%">காலை(லி) </th>
-            <th width="10%">மாலை(லி) </th>
-            <th width="10%">மொத்த பால்</th>
-            <th width="10%">பால் விலை</th>
-            <th width="10%">மொத்த Amount</th>
-            <th width="10%">Action</th>
-            </tr>
-          <tr>
-            <td>1</td>
-            <td>01-09-2024</td>
-            <td>Aavin</td>
-            <td>9.5</td>
-            <td>8.4</td>
-            <td>17.9</td>
-            <td>34.00</td>
-            <td>532.00</td>
-            <td><a href="/milk-edit" class="btn btn-sm px-3 btn-primary w-100">Edit ></a></td>
-          </tr>
-          
-          <tr>
-            <td>2</td>
-            <td>01-09-2024</td>
-            <td>Aavin</td>
-            <td>9.5</td>
-            <td>8.4</td>
-            <td>17.9</td>
-            <td>34.00</td>
-            <td>532.00</td>
-            <td><a href="/milk-edit" class="btn btn-sm px-3 btn-primary w-100">Edit ></a></td>
-          </tr>
-    
-          <tr>
-            <td>3</td>
-            <td>01-09-2024</td>
-            <td>Aavin</td>
-            <td>9.5</td>
-            <td>8.4</td>
-            <td>17.9</td>
-            <td>34.00</td>
-            <td>532.00</td>
-            <td><a href="/milk-edit" class="btn btn-sm px-3 btn-primary w-100">Edit ></a></td>
-          </tr>
-          <tr>
-            <td>4</td>
-            <td>01-09-2024</td>
-            <td>Aavin</td>
-            <td>9.5</td>
-            <td>8.4</td>
-            <td>17.9</td>
-            <td>34.00</td>
-            <td>532.00</td>
-            <td><a href="/milk-edit" class="btn btn-sm px-3 btn-primary w-100 ">Edit ></a></td>
-          </tr>
-          <tr>
-            <td colspan="6" align="right">மொத்தம்</td>
-            <td>244.6</td>
-            <td>5000.00</td>
-            <td></td>
-          </tr>
-    
-        </tbody>
-      </table>
-  </div>
-
-
-</div>
-<!-- content end -->   
-        </div>   
-
-    </div>
-</div>
-<%- include('templates/footer-links.ejs') %>    
-<script>
-  $(document).ready(function() {
-      // Filter dropdown items based on search input
-      $('.dropdownSearch').on('keyup', function() {
+  <%- include('templates/footer-links.ejs') %>
+    <script>
+      $(document).ready(function () {
+        $('.dropdownSearch').on('keyup', function () {
           var value = $(this).val().toLowerCase();
-          $('#dropdownItems2 .dropdown-item').filter(function() {
-              $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
+          $('#dropdownItems2 .dropdown-item').filter(function () {
+            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
           });
-      });
+        });
 
-      // Show dropdown menu on button focus
-      $('#dropdownMenuButton').on('keydown', function() {
+        $('#dropdownMenuButton').on('keydown', function () {
           $('.search-menu').addClass('show');
-      });
+        });
 
-      // Handle dropdown item selection
-      $('#dropdownItems2').on('click', '.dropdown-item', function() {
-          // Update input value with the selected item text
+        $('#dropdownItems2').on('click', '.dropdown-item', function () {
           $('#dropdownMenuButton').val($(this).text());
-          $('#dropdownMenuButton').focus(); // Optional, as it's already focused
-          $('.search-menu').removeClass('show'); // Hide the dropdown after selection
+          $('#dropdownMenuButton').focus();
+          $('.search-menu').removeClass('show');
+        });
+
+        $(document).on('click', function (e) {
+          if (!$(e.target).closest('.dropdown').length) {
+            $('.search-menu').removeClass('show');
+          }
+        });
       });
 
-      // Close dropdown when clicking outside
-      $(document).on('click', function(e) {
-          if (!$(e.target).closest('.dropdown').length) {
-              $('.search-menu').removeClass('show');
+      const today = new Date();
+      const formattedDate = today.toISOString().split('T')[0];
+      document.getElementById('date').value = formattedDate;
+    </script>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        const companySelect = document.getElementById('company_id');
+        const incentiveInput = document.getElementById('incentive_price');
+        const qtyInput = document.getElementById('distributed_milk_qty');
+        const priceInput = document.getElementById('price_per_liter');
+        const totalAmtInput = document.getElementById('total_amt');
+
+        companySelect.addEventListener('change', function () {
+          const selectedOption = companySelect.options[companySelect.selectedIndex];
+          const incentivePrice = selectedOption.getAttribute('data-incentive');
+          incentiveInput.value = incentivePrice ? incentivePrice : '';
+
+          calculateTotal();
+        });
+
+        function calculateTotal() {
+          const qty = parseFloat(qtyInput.value) || 0;
+          const price = parseFloat(priceInput.value) || 0;
+          const incentive = parseFloat(incentiveInput.value) || 0;
+
+          const total = (price + incentive) * qty;
+          totalAmtInput.value = total.toFixed(2);
+        }
+
+        [qtyInput, priceInput].forEach(input => {
+          input.addEventListener('input', calculateTotal);
+        });
+
+        document.getElementById('milk-sale-form').addEventListener('submit', async function (e) {
+          e.preventDefault();
+
+          const formData = {
+            date: document.getElementById('date').value,
+            collection_time: document.querySelector('input[name="collection_time"]:checked').value,
+            company_id: companySelect.value,
+            distributed_milk_qty: qtyInput.value,
+            FAT: document.getElementById('FAT').value,
+            SNF: document.getElementById('SNF').value,
+            price_per_liter: priceInput.value,
+            incentive_price: incentiveInput.value,
+            total_amt: totalAmtInput.value
+          };
+
+          try {
+            const response = await fetch('/milk-sales-add', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify(formData),
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+              const errorMessage = document.getElementById('error-message');
+              errorMessage.textContent = data.message;
+              errorMessage.classList.remove('d-none');
+            }
+            else {
+              alert(data.message || 'Milk sales record added successfully!');
+            }
+          } catch (error) {
+            console.error('Error updating milk sales details:', error);
+            document.getElementById('error-message').textContent = 'Error: Could not submit data';
+            document.getElementById('error-message').classList.remove('d-none');
           }
+        });
       });
-  });
-</script>
-  </body>
+    </script>
+
+</body>
+
 </html>

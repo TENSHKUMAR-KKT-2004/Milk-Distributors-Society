@@ -1,225 +1,264 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Milk Society</title>
-    <%- include('templates/header-links.ejs') %>  
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Milk Society</title>
+  <%- include('templates/header-links.ejs') %>
     <script>
-      window.onload = function() {
-          var element = document.getElementById('menu5');
-          element.classList.add('active');
-          var element = document.getElementById('leftmenu5');
-          element.classList.add('active1');
+      window.onload = function () {
+        var element = document.getElementById('menu5');
+        element.classList.add('active');
+        var element = document.getElementById('leftmenu5');
+        element.classList.add('active1');
       };
-  </script>  
+    </script>
 
-<style>
-  .search-menu.show {
-      max-height: 200px;
-      overflow-y: auto;
-  }
-</style>
-  </head>
+    <style>
+      .search-menu.show {
+        max-height: 200px;
+        overflow-y: auto;
+      }
+    </style>
+</head>
 
-<body>    
-<div class="container-fluid h-100 w-100 position-absolute">
+<body>
+  <div class="container-fluid h-100 w-100 position-absolute">
     <div class="row h-100">
-        <%- include('templates/left-menu.ejs') %>
+      <%- include('templates/left-menu.ejs') %>
         <div class="col-12 col-lg-10 px-0">
-            <div id="overlay" onClick="closeNav()"></div>
-            <%- include('templates/header.ejs') %>
-            <%- include('templates/mobile-menu.ejs') %>  
-<!-- content -->
-<div class="col-12 content-container position-relative">
+          <div id="overlay" onClick="closeNav()"></div>
+          <%- include('templates/header.ejs') %>
+            <%- include('templates/mobile-menu.ejs') %>
+              <!-- content -->
+              <div class="col-12 content-container position-relative">
+                <form id="feed-sale-form">
 
-  <div class="col-12 bg-primary-subtle p-3 justify-content-center">
-    <div class="container row g-2 mx-auto">
-      <div class="col-12 col-lg-6 pt-2">
-        <div class="form-check form-check-inline">
-          <input class="form-check-input" type="radio" name="inlineRadioOptions" id="cash" value="option1" checked>
-          <label class="form-check-label" for="cash">Cash</label>
-        </div>
-        <div class="form-check form-check-inline">
-          <input class="form-check-input" type="radio" name="inlineRadioOptions" id="credit" value="option2">
-          <label class="form-check-label" for="credit">Credit</label>
-        </div>
-    </div>
-  
-      <div class="col-12 col-lg-6 text-center text-lg-end">
-        <form class="row g-2 float-end">
-          <div class="col-auto form-group">
-            <input type="date" class="form-control">
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
+                  <div class="col-12 bg-primary-subtle p-3 justify-content-center">
+                    <div class="container row g-2 mx-auto">
+                      <div class="col-12 col-lg-6 pt-2">
+                        <div class="form-check form-check-inline">
+                          <input class="form-check-input" type="radio" name="payment_mode" id="cash" value="cash"
+                            checked>
+                          <label class="form-check-label" for="cash">Cash</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                          <input class="form-check-input" type="radio" name="payment_mode" id="credit" value="credit">
+                          <label class="form-check-label" for="credit">Credit</label>
+                        </div>
+                      </div>
 
-    <div class="container mt-3">
-      <div class="row mb-2 mt-4">
-        <div class="col-12 col-lg-6  mb-3">
-          <div class="dropdown ">
-            <input class="form-control dropdown-toggle w-100 dropdownSearch" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false" placeholder="Search மாட்டுக்காரர்">
-              
-            <div class="dropdown-menu search-menu w-100" aria-labelledby="dropdownMenuButton">
-                
-                <div id="dropdownItems2">
-                    <a class="dropdown-item" href="#">one</a>
-                    <a class="dropdown-item" href="#">two</a>
-                    <a class="dropdown-item" href="#">three</a>
-                    <a class="dropdown-item" href="#">four</a>
-                    <a class="dropdown-item" href="#">five</a>
-                    <a class="dropdown-item" href="#">six</a>
-                    <a class="dropdown-item" href="#">seven</a>
-                    <a class="dropdown-item" href="#">eight</a>
-                    <a class="dropdown-item" href="#">nine</a>
+                      <div class="col-12 col-lg-6 text-center text-lg-end">
+                        <!-- <form class="row g-2 float-end"> -->
+                        <div class="col-auto form-group">
+                          <input type="date" id="sales_date" name="sales_date" class="form-control" required>
+                        </div>
+                        <!-- </form> -->
+                      </div>
+                    </div>
+                  </div>
+
+                  <div id="error-message" class="alert alert-danger d-none" role="alert"></div>
+
+                  <div class="container mt-3">
+                    <div class="row mb-2 mt-4">
+                      <div class="col-12 col-lg-6  mb-3">
+                        <div class="dropdown ">
+                          <input class="form-control dropdown-toggle w-100 dropdownSearch" id="dropdownMenuButton"
+                            data-bs-toggle="dropdown" type="text" aria-expanded="false"
+                            placeholder="Search மாட்டுக்காரர்" required>
+
+                          <div class="dropdown-menu search-menu w-100" aria-labelledby="dropdownMenuButton">
+                            <div id="dropdownItems2">
+                              <% producers.forEach(producer=> { %>
+                                <a class="dropdown-item" href="#" data-id="<%= producer.id %>">
+                                  <%= producer.name %>
+                                </a>
+                                <% }); %>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="col-12 col-lg-6 mb-3">
+                        <select class="form-select" id="feed_id" name="feed_id" required>
+                          <option selected>-- select தீவனம்--</option>
+                          <% feeds.forEach(function(feed) { %>
+                            <option value="<%= feed.id %>">
+                              <%= feed.name %>
+                            </option>
+                            <% }); %>
+                        </select>
+                      </div>
+
+                      <div class="col-12 col-lg-6 mb-3">
+                        <input type="text" id="quantity" name="quantity" class="form-control" placeholder="Qnty"
+                          required>
+                      </div>
+
+                      <div class="col-12 col-lg-6 mb-3">
+                        <input type="text" id="price" name="price" class="form-control" placeholder="விலை" required>
+                      </div>
+
+                      <div class="col-12 col-lg-12 mb-3">
+                        <input type="text" id="total_price" name="total_price" class="form-control"
+                          placeholder="மொத்த விலை" required>
+                      </div>
+
+                      <div class="col-12 col-lg-6 offset-lg-6 mb-3">
+                        <div class="row">
+                          <div class="col-12">
+                            <input type="submit" class="form-control btn btn-success" value="Add">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+
+                <div class="container">
+                  <p class="mt-3"><strong>Recent Transaction</strong> </p>
+                  <table width="100%" border="1" class="table-border mt-2" cellspacing="0" cellpadding="5">
+                    <tbody>
+                      <tr>
+                        <th width="7%">S.No.</th>
+                        <th width="16%" align="center">Date</th>
+                        <th width="35%">Feed</th>
+                        <th width="11%" align="center">Qnty</th>
+                        <th width="17%">Price</th>
+                        <th width="14%">Total</th>
+                      </tr>
+                      <% sales_records.forEach((record, index) => { 
+                        const feed = feeds.find(f => f.id === record.feed_id);
+                        %>  
+                        <tr>
+                          <td><%= index + 1 %></td>
+                          <td align="center"><%= new Date(record.sales_date).toLocaleDateString('en-GB')  %></td>
+                          <td><%= feed ? feed.name : 'Unknown Feed' %></td>
+                          <td align="center"><%= record.quantity %></td>
+                          <td align="right"><%= record.sales_price.toFixed(2) %></td>
+                          <td align="right"><%= record.total_price.toFixed(2) %></td>
+                        </tr>
+                        <% }) %>
+                    </tbody>
+                  </table>
+
                 </div>
-            </div>
-         </div>
+
+
+              </div>
+              <!-- content end -->
         </div>
 
-        <div class="col-12 col-lg-6 mb-3">
-          <select class="form-select">
-            <option selected>-- select தீவனம்--</option>
-            <option value="1">பருத்தி விதை (பெரியது)</option>
-            <option value="2">பருத்தி விதை (சிறியது)</option>
-            <option value="3">பருத்தி புண்ணாக்கு</option>
-            <option value="4">கம்பு மாவு</option>
-            <option value="5">குச்சி புண்ணாக்கு</option>
-          </select>
-        </div>
-    
-        <div class="col-12 col-lg-6  mb-3">
-          <input type="text" class="form-control" placeholder="Qnty">
-        </div>
-    
-        <div class="col-12 col-lg-6  mb-3">
-          <input type="text" class="form-control" placeholder="விலை">
-        </div>
-    
-        <div class="col-12 col-lg-12  mb-3">
-          <input type="text" class="form-control" placeholder="மொத்த விலை">
-        </div>
-    
-      
-    
-        <div class="col-12 col-lg-6 offset-lg-6 mb-3">
-          <div class="row">
-            <div class="col-6">
-              <input type="submit" class="form-control btn btn-danger" value="Edit">
-            </div>
-            <div class="col-6">
-              <input type="submit" class="form-control btn btn-success" value="Save">
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
-
-    <div class="container">
-      <p class="mt-3"><strong>Recent Transaction</strong> </p>
-      <table width="100%" border="1" class="table-border mt-2"  cellspacing="0" cellpadding="5">
-          <tbody>
-              <tr>
-              <th width="7%">S.No.</th>
-              <th width="16%" align="center">Date</th>
-              <th width="35%">Feed</th>
-              <th width="11%" align="center">Qnty</th>
-              <th width="17%">Price</th>
-              <th width="14%">Total</th>
-              </tr>
-            <tr>
-              <td>1</td>
-              <td align="center">02-09-2024</td>
-              <td>Kambu Mavu</td>
-              <td align="center">2</td>
-              <td align="right">2500.00</td>
-              <td align="right">5000.00</td>
-            </tr>
-            <tr>
-              <td>2</td>
-              <td align="center">03-09-2024</td>
-              <td>Uppu chippam</td>
-              <td align="center">2</td>
-              <td align="right">1500.00</td>
-              <td align="right">3000.00</td>
-            </tr>
-            <tr>
-              <td>3</td>
-              <td align="center">04-09-2024</td>
-              <td>Paruthi Punnakku (small)</td>
-              <td align="center">1</td>
-              <td align="right">3200.00</td>
-              <td align="right">3200.00</td>
-            </tr>
-            <tr>
-              <td>4</td>
-              <td align="center">04-09-2024</td>
-              <td>Kambu Mavu</td>
-              <td align="center">2</td>
-              <td align="right">2500.00</td>
-              <td align="right">5000.00</td>
-            </tr>
-            <tr>
-              <td>5</td>
-              <td align="center">05-09-2024</td>
-              <td>Paruthi Punnakku</td>
-              <td align="center">1</td>
-              <td align="right">1500.00</td>
-              <td align="right">3000.00</td>
-            </tr>
-            <tr>
-              <td>6</td>
-              <td align="center">05-09-2024</td>
-              <td>Kambu Mavu</td>
-              <td align="center">1</td>
-              <td align="right">3200.00</td>
-              <td align="right">3200.00</td>
-            </tr>
-          </tbody>
-        </table> 
-      
   </div>
-
-
-</div>
-<!-- content end -->   
-        </div>   
-
-    </div>
-</div>
-<%- include('templates/footer-links.ejs') %>    
-<script>
-  $(document).ready(function() {
-      // Filter dropdown items based on search input
-      $('.dropdownSearch').on('keyup', function() {
+  <%- include('templates/footer-links.ejs') %>
+    <script>
+      $(document).ready(function () {
+        $('.dropdownSearch').on('keyup', function () {
           var value = $(this).val().toLowerCase();
-          $('#dropdownItems2 .dropdown-item').filter(function() {
-              $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
+          $('#dropdownItems2 .dropdown-item').filter(function () {
+            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
           });
-      });
+        });
 
-      // Show dropdown menu on button focus
-      $('#dropdownMenuButton').on('keydown', function() {
+        $('#dropdownMenuButton').on('keydown', function () {
           $('.search-menu').addClass('show');
-      });
+        });
 
-      // Handle dropdown item selection
-      $('#dropdownItems2').on('click', '.dropdown-item', function() {
-          // Update input value with the selected item text
+        $('#dropdownItems2').on('click', '.dropdown-item', function () {
           $('#dropdownMenuButton').val($(this).text());
-          $('#dropdownMenuButton').focus(); // Optional, as it's already focused
-          $('.search-menu').removeClass('show'); // Hide the dropdown after selection
-      });
+          $('#dropdownMenuButton').focus();
+          $('.search-menu').removeClass('show');
+        });
 
-      // Close dropdown when clicking outside
-      $(document).on('click', function(e) {
+        $(document).on('click', function (e) {
           if (!$(e.target).closest('.dropdown').length) {
-              $('.search-menu').removeClass('show');
+            $('.search-menu').removeClass('show');
           }
+        });
       });
-  });
-</script>
-  </body>
+    </script>
+
+    <script>
+      document.getElementById('feed-sale-form').addEventListener('submit', async function (event) {
+        event.preventDefault();
+
+        var formData = {
+          payment_mode: document.querySelector('input[name="payment_mode"]:checked').value,
+          sales_date: document.getElementById('sales_date').value,
+          milk_producer_id: document.getElementById('milk_producer_id').value,
+          feed_id: document.getElementById('feed_id').value,
+          quantity: document.getElementById('quantity').value,
+          sales_price: document.getElementById('price').value,
+          total_price: document.getElementById('total_price').value
+        };
+
+        try {
+          const response = await fetch('/feed-sales-add', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(formData),
+          });
+
+          const data = await response.json();
+
+          if (!response.ok) {
+            const errorMessage = document.getElementById('error-message');
+            errorMessage.textContent = data.message;
+            errorMessage.classList.remove('d-none');
+          }
+          else {
+            alert(data.message || 'Cattle feed product sales record added successfully!');
+          }
+        } catch (error) {
+          console.error('Error updating producer details:', error);
+          document.getElementById('error-message').textContent = 'Error: Could not submit data';
+          document.getElementById('error-message').classList.remove('d-none');
+        }
+      })
+
+      function updateTotalPrice() {
+        const quantity = document.getElementById('quantity').value;
+        const price = document.getElementById('price').value;
+        const totalPriceInput = document.getElementById('total_price');
+
+        const totalPrice = quantity * price;
+
+        totalPriceInput.value = isNaN(totalPrice) ? '' : totalPrice.toFixed(2);
+      }
+
+      const today = new Date();
+      const formattedDate = today.toISOString().split('T')[0];
+      document.getElementById('sales_date').value = formattedDate;
+    </script>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        const dropdownItems = document.querySelectorAll('#dropdownItems2 .dropdown-item');
+
+        dropdownItems.forEach(item => {
+          item.addEventListener('click', (e) => {
+            e.preventDefault();
+
+            const selectedName = e.target.textContent;
+            const selectedId = e.target.getAttribute('data-id');
+
+            const hiddenInput = document.getElementById('milk_producer_id');
+            if (!hiddenInput) {
+              const input = document.createElement('input');
+              input.type = 'hidden';
+              input.id = 'milk_producer_id';
+              input.value = selectedId;
+              document.getElementById('feed-sale-form').appendChild(input);
+            } else {
+              hiddenInput.value = selectedId;
+            }
+          });
+        });
+      });
+    </script>
+</body>
+
 </html>

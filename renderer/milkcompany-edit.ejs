@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Milk Society</title>
+    <%- include('templates/header-links.ejs') %>    
+  </head>
+
+<body>    
+  <div class="container-fluid h-100 w-100 position-absolute bg-grey">
+    <div class="row h-100">  
+      <%- include('templates/left-menu.ejs') %>
+        <div class="col-12 col-lg-10 px-0">
+          <div id="overlay" onClick="closeNav()">
+            <%- include('templates/header.ejs') %>
+              <%- include('templates/mobile-menu.ejs') %>
+                <div class="col-12 p-4"> 
+        <div class="col-12 p-4">
+          <div class="bg-danger p-2 mb-3 text-center">
+            <p class="text-white mb-0"><strong>பால் கம்பெனியை திருத்த</strong></p>
+          </div>
+          <div id="error-message" class="alert alert-danger d-none" role="alert"></div>
+
+          <div class="input-group mb-3">
+            <select id="company-selector" class="form-select" required>
+                <option value="">-- கம்பெனிகள் --</option>
+                <% companies.forEach(function(company) { %>
+                    <option value="<%= JSON.stringify(company) %>">
+                        <%= company.name %>
+                    </option>
+                    <% }); %>
+            </select>
+        </div>
+          <form id="formData" class="d-none">
+            <div class="input-group mb-3"><input type="text" id="name" class="form-control" placeholder="Company Name"></div>
+            <div class="input-group mb-3"><input type="text" id="address" class="form-control" placeholder="Milk Rate"></div>
+            <div class="input-group mb-3"><input type="text" id="contact_no" class="form-control" placeholder="Mobile Number"></div>
+            <div class="input-group mb-3"><input type="text" id="incentive_price" class="form-control" placeholder="Address"></div>
+            <div class="row">
+              <div class="col-12"><button type="submit" class="btn btn-success w-100">Save</button></div>
+            </div>
+          </form>
+          
+        </div>   
+        </div>   
+      </div>   
+    </div>
+</div>
+<%- include('templates/footer-links.ejs') %>    
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const form = document.getElementById('formData');
+        const selector = document.getElementById('company-selector');
+  
+        selector.addEventListener('change', function () {
+            const company = JSON.parse(selector.value);
+  
+            if (!company) {
+                form.classList.add('d-none');
+                return;
+            }
+  
+            document.getElementById('name').value = company.name;
+            document.getElementById('address').value = company.address;
+            document.getElementById('contact_no').value = company.contact_no;
+            document.getElementById('incentive_price').value = company.incentive_price;
+  
+            form.classList.remove('d-none');
+        });
+  
+        form.addEventListener('submit', async function (event) {
+            event.preventDefault();
+  
+            const companyID = JSON.parse(selector.value).id;
+            const name = document.getElementById('name').value;
+            const address = document.getElementById('address').value;
+            const contact_no = document.getElementById('contact_no').value;
+            const incentive_price = document.getElementById('incentive_price').value;
+  
+            try {
+                const response = await fetch('/milkcompany-edit', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ id: companyID, name, address, contact_no, incentive_price }),
+                });
+  
+                const data = await response.json();
+  
+                if (!response.ok) {
+                    const errorMessage = document.getElementById('error-message');
+                    errorMessage.textContent = data.message;
+                    errorMessage.classList.remove('d-none');
+                }
+                else {
+                    alert(data.message || 'Company details updated successfully!');
+                }
+            } catch (error) {
+                console.error('Error updating company details details:', error);
+                document.getElementById('error-message').textContent = 'Error: Could not submit data';
+                document.getElementById('error-message').classList.remove('d-none');
+            }
+        });
+    });
+  </script>
+  </body>
+</html>

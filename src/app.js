@@ -4,13 +4,13 @@ const express = require('express')
 const session = require('express-session')
 require("dotenv").config();
 
-const authMiddleware = require('./middleware/authMiddleware');
-const authRoutes = require('./routes/authRoutes');
-const milkersRoutes = require('./routes/milkersRoutes');
-const cowOwnersRoutes = require('./routes/cowOwnersRoutes');
-const milkEntryRoute = require('./routes/milkEntryRoutes');
-const feedRoutes = require('./routes/feedRoutes');
-const milkCompanyRoutes = require('./routes/milkCompanyRoutes');
+const authMiddleware = require('../middleware/authMiddleware');
+const authRoutes = require('../routes/authRoutes');
+const milkersRoutes = require('../routes/milkersRoutes');
+const cowOwnersRoutes = require('../routes/cowOwnersRoutes');
+const milkEntryRoute = require('../routes/milkEntryRoutes');
+const feedRoutes = require('../routes/feedRoutes');
+const milkCompanyRoutes = require('../routes/milkCompanyRoutes');
 
 // Set up Express app
 const expressApp = express()

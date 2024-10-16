@@ -11,6 +11,12 @@
 <body>
     <div class="container-fluid h-100 w-100 position-absolute bg-grey">
         <div class="row h-100">
+            <%- include('templates/left-menu.ejs') %>
+        <div class="col-12 col-lg-10 px-0">
+          <div id="overlay" onClick="closeNav()">
+            <%- include('templates/header.ejs') %>
+              <%- include('templates/mobile-menu.ejs') %>
+                <div class="col-12 p-4">
             <div class="col-12 p-4">
                 <div class="bg-danger p-2 mb-3 text-center">
                     <p class="text-white mb-0"><strong>மாட்டுக்காரரை திருத்தம் செய்ய</strong></p>
@@ -58,6 +64,8 @@
                     </div>
                 </form>
             </div>
+            </div>
+        </div>
         </div>
     </div>
     <%- include('templates/footer-links.ejs') %>

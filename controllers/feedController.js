@@ -39,8 +39,34 @@ const getEditFeedPage = async (req, res) => {
 };
 
 const getFeedSalesPage = async (req, res) => {
-  res.render('feed-sales');
-};
+  try {
+    db.all("SELECT * FROM cattle_feeds", [], (err, feeds) => {
+      if (err) {
+        console.error(err.message);
+        res.status(500).send("Error fetching cattle feed product ");
+        return;
+      }
+      db.all("SELECT * FROM milk_producers WHERE is_active = 1", [], (err, producers) => {
+        if (err) {
+          console.error(err.message);
+          res.status(500).send("Error fetching cattle feed product ");
+          return;
+        }
+        db.all("SELECT * FROM cattle_feed_sales", [], (err, sales_records) => {
+          if (err) {
+            console.error(err.message);
+            res.status(500).send("Error fetching cattle feed product ");
+            return;
+          }
+          res.render('feed-sales', { feeds, producers, sales_records });
+        })
+      })
+    })
+  } catch (err) {
+    console.error('Error fetching data from the database:', err);
+    res.status(500).send('Internal Server Error');
+  }
+}
 
 const getFeedPurchasePage = async (req, res) => {
   try {
@@ -237,6 +263,56 @@ const updateFeedPurchase = async (req, res) => {
     console.error('Database Error:', err);
     res.status(500).send('Internal Server Error');
   }
+}
+
+const addFeedSales = async (req, res) => {
+    const { milk_producer_id, payment_mode, sales_date, feed_id, quantity, sales_price, total_price } = req.body;
+    const sql = `INSERT INTO cattle_feed_sales (milk_producer_id, payment_mode, sales_date, feed_id, quantity, sales_price, total_price) 
+                 VALUES (?, ?, ?, ?, ?, ?, ?)`;
+
+    const params = [milk_producer_id, payment_mode, sales_date, feed_id, quantity, sales_price, total_price];
+
+    try {
+        db.run(sql, params, function (err) {
+            if (err) {
+              console.error('Error adding feed sales record:', err.message);
+              return res.status(500).send('Failed to adding feed sales record.');
+            }
+
+            res.status(201).json({ message: 'Cattle feed sales record added successfully!' });
+          });
+    } catch (error) {
+        res.status(500).json({ message: "Failed to create feed sale record" });
+    }
 };
 
-module.exports = { getFeeds, getAddFeedPage, getEditFeedPage, getFeedSalesPage, getFeedPurchasePage, addNewFeedProduct, updateFeedProduct, addFeedPurchase, updateFeedPurchase };
+// // Fetch all feed sales records
+// exports.getFeedSales = async (req, res) => {
+//     try {
+//         const result = await db.query('SELECT * FROM cattle_feed_sales');
+//         res.status(200).json(result.rows);
+//     } catch (error) {
+//         res.status(500).json({ error: "Failed to retrieve feed sales" });
+//     }
+// };
+
+// // Update feed sale record
+// exports.updateFeedSale = async (req, res) => {
+//     const { id } = req.params;
+//     const { milk_producer_id, payment_mode, sales_date, feed_id, quantity, sales_price, total_price } = req.body;
+
+//     try {
+//         const result = await db.query(
+//             `UPDATE cattle_feed_sales 
+//              SET milk_producer_id = $1, payment_mode = $2, sales_date = $3, feed_id = $4, quantity = $5, sales_price = $6, total_price = $7, updated_at = NOW() 
+//              WHERE id = $8 RETURNING *`,
+//             [milk_producer_id, payment_mode, sales_date, feed_id, quantity, sales_price, total_price, id]
+//         );
+//         res.status(200).json(result.rows[0]);
+//     } catch (error) {
+//         res.status(500).json({ error: "Failed to update feed sale record" });
+//     }
+// };
+
+
+module.exports = { getFeeds, getAddFeedPage, getEditFeedPage, getFeedSalesPage, getFeedPurchasePage, addNewFeedProduct, updateFeedProduct, addFeedPurchase, updateFeedPurchase, addFeedSales };

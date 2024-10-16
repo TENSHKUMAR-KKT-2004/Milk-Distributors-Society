@@ -263,7 +263,7 @@
               alert(data.message || 'cattle feed product purchase record added successfully!');
             }
           } catch (error) {
-            console.error('Error updating producer details:', error);
+            console.error('Error adding feed purchase record details:', error);
             document.getElementById('error-message').textContent = 'Error: Could not submit data';
             document.getElementById('error-message').classList.remove('d-none');
           }

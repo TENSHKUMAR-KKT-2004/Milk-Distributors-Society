@@ -9,7 +9,13 @@
 
 <body>    
   <div class="container-fluid h-100 w-100 position-absolute bg-grey">
-    <div class="row h-100">   
+    <div class="row h-100"> 
+      <%- include('templates/left-menu.ejs') %>
+        <div class="col-12 col-lg-10 px-0">
+          <div id="overlay" onClick="closeNav()">
+            <%- include('templates/header.ejs') %>
+              <%- include('templates/mobile-menu.ejs') %>
+                <div class="col-12 p-4">  
         <div class="col-12 p-4">
           <div class="bg-primary p-2 mb-3 text-center">
             <p class="text-white mb-0"><strong>தீவனங்களை சேர்க்க</strong></p>
@@ -24,7 +30,9 @@
               <div class="col-12"><button type="submit" class="btn btn-success w-100">Save</button></div>
             </div>
           </form>
-          
+        </div>
+      </div>
+
         </div>   
     </div>
 </div>

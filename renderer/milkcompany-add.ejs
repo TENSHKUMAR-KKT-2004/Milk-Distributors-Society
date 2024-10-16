@@ -9,25 +9,76 @@
 
 <body>    
   <div class="container-fluid h-100 w-100 position-absolute bg-grey">
-    <div class="row h-100">   
+    <div class="row h-100">  
+      <%- include('templates/left-menu.ejs') %>
+        <div class="col-12 col-lg-10 px-0">
+          <div id="overlay" onClick="closeNav()">
+            <%- include('templates/header.ejs') %>
+              <%- include('templates/mobile-menu.ejs') %>
+                <div class="col-12 p-4"> 
         <div class="col-12 p-4">
           <div class="bg-primary p-2 mb-3 text-center">
             <p class="text-white mb-0"><strong>பால் கம்பெனியை சேர்க்க</strong></p>
           </div>
+          <div id="error-message" class="alert alert-danger d-none" role="alert"></div>
           
-          <form>
-            <div class="input-group mb-3"><input type="text" class="form-control" placeholder="Company Name"></div>
-            <div class="input-group mb-3"><input type="text" class="form-control" placeholder="Milk Rate"></div>
-            <div class="input-group mb-3"><input type="text" class="form-control" placeholder="Mobile Number"></div>
-            <div class="input-group mb-3"><input type="text" class="form-control" placeholder="Address"></div>
+          <form id="formData">
+            <div class="input-group mb-3"><input type="text" id="name" class="form-control" placeholder="Company Name"></div>
+            <div class="input-group mb-3"><input type="text" id="address" class="form-control" placeholder="Address"></div>
+            <div class="input-group mb-3"><input type="text" id="contact_no" class="form-control" placeholder="Contact No"></div>
+            <div class="input-group mb-3"><input type="text" id="incentive_price" class="form-control" placeholder="incentive price"></div>
+            <div class="row">
+              <div class="col-12"><button type="submit" class="btn btn-success w-100">Save</button></div>
+            </div>
           </form>
-          <div class="row">
-            <div class="col-6"><a href="#" class="btn btn-danger w-100">Edit</a></div>
-            <div class="col-6"><a href="#" class="btn btn-success w-100">Save</a></div>
-          </div>
+          
         </div>   
+        </div>   
+      </div>   
     </div>
 </div>
 <%- include('templates/footer-links.ejs') %>    
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const form = document.getElementById('formData');
+    form.addEventListener('submit', async function (event) {
+      event.preventDefault();
+
+      document.getElementById('error-message').classList.add('d-none');
+
+      const name = document.getElementById('name').value;
+      const address = document.getElementById('address').value;
+      const contact_no = document.getElementById('contact_no').value;
+      const incentive_price = document.getElementById('incentive_price').value
+
+      try {
+        const response = await fetch('/milkcompany-add', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ name, address, contact_no, incentive_price}),
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+          const errorMessage = document.getElementById('error-message');
+          errorMessage.textContent = data.message;
+          errorMessage.classList.remove('d-none');
+        }
+        else {
+          alert(data.message || 'New company details added successfully!');
+        }
+      } catch (error) {
+        console.error('Error:', error);
+        const errorMessage = document.getElementById('error-message');
+        errorMessage.textContent = 'Error: Could not submit data';
+        errorMessage.classList.remove('d-none');
+      }
+    })
+  });
+</script>
   </body>
 </html>

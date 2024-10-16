@@ -14,5 +14,6 @@ router.post('/feed-add', authMiddleware, feedController.addNewFeedProduct);
 router.post('/feed-edit', authMiddleware, feedController.updateFeedProduct);
 router.post('/feed-purchase-add', authMiddleware, feedController.addFeedPurchase);
 router.post('/feed-purchase-edit', authMiddleware, feedController.updateFeedPurchase);
+router.post('/feed-sales-add', authMiddleware, feedController.addFeedSales);
 
 module.exports = router;
