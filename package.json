@@ -3,13 +3,14 @@
   "productName": "Milk Distributors Society",
   "version": "1.0.0",
   "description": "Freelancing Project",
-  "main": "app.js",
+  "main": "main.js",
   "scripts": {
     "start": "electron .",
     "electron-pack": "electron-builder --win -p always",
     "package-win": "electron-packager . Milk-Distributors-Society --overwrite --asar=true --platform=win32 --arch=ia32 --icon=assets/images/icon.png --prune=true --out=release-builds --version-string.CompanyName=CE --version-string.FileDescription=CE --version-string.ProductName=\"Billing-Software\"",
     "package-linux": "electron-packager . Milk-Distributors-Society --overwrite --asar=true --platform=linux --arch=x64 --icon=assets/images/icon.png --prune=true --out=release-builds",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "electron-builder"
   },
   "author": "TENSHKUMAR K",
   "license": "ISC",
@@ -26,5 +27,27 @@
   "devDependencies": {
     "electron": "^32.0.2",
     "electron-builder": "^25.1.8"
+  },
+  "build": {
+    "appId": "com.milk.distributors.society",
+    "productName": "Milk Distributors Society",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "assets/**/*",
+      "config/**/*",
+      "controllers/**/*",
+      "middleware/**/*",
+      "models/**/*",
+      "renderer/**/*",
+      "routes/**/*",
+      "main.js",
+      "app.js",
+      "package.json"
+    ],
+    "win": {
+      "target": "nsis"
+    }
   }
 }
