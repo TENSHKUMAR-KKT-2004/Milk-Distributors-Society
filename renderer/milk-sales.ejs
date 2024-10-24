@@ -156,7 +156,9 @@
                               <td>
                                 <%= record.total_amt.toFixed(2) %>
                               </td>
-                              <td></td>
+                              <td><button type="button" class="form-control btn btn-danger btn-sm"
+                                  data-bs-toggle="modal" data-bs-target="#editSalesModal"
+                                  onclick="loadSalesData(<%= JSON.stringify(record) %>)">Edit</button></td>
                             </tr>
                             <% totalQty +=record.total_qty; totalAmount +=record.total_amt; %>
                               <% }); %>
@@ -187,6 +189,57 @@
 
     </div>
   </div>
+
+  <!-- Edit Milk Sales Modal -->
+  <div class="modal fade" id="editSalesModal" tabindex="-1" aria-labelledby="editSalesModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="editSalesModalLabel">Edit Milk Sales Record</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <!-- Add an option to select morning or evening -->
+          <div class="mb-3">
+            <label for="timeOfDaySelector" class="form-label">Select Record to Edit</label>
+            <select id="timeOfDaySelector" class="form-select">
+              <option selected value="">-- Select Time --</option>
+              <option value="morning">Morning</option>
+              <option value="evening">Evening</option>
+            </select>
+          </div>
+
+          <form id="editMilkSalesForm">
+            <div class="mb-3">
+              <label for="editDate" class="form-label">Date</label>
+              <input type="date" id="editDate" class="form-control" placeholder="Date" readonly>
+              <input type="hidden" id="milk_sales_id" class="form-control">
+            </div>
+            <div class="mb-3">
+              <label for="editCompanyName" class="form-label">Company Name</label>
+              <input type="text" id="editCompanyName" class="form-control" placeholder="Company Name" readonly>
+            </div>
+            <div class="mb-3">
+              <label for="editDistributedMilkQty" class="form-label">Distributed Milk Quantity</label>
+              <input type="text" id="editDistributedMilkQty" class="form-control" placeholder="Quantity"
+                oninput="updateEditTotalPrice()">
+            </div>
+            <div class="mb-3">
+              <label for="editPricePerLiter" class="form-label">Price Per Liter</label>
+              <input type="text" id="editPricePerLiter" class="form-control" placeholder="Price">
+            </div>
+            <div class="mb-3">
+              <label for="editTotalPrice" class="form-label">Total Price</label>
+              <input type="text" id="editTotalPrice" class="form-control" placeholder="Total Price" readonly>
+            </div>
+            <button type="submit" class="btn btn-primary">Save changes</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
   <%- include('templates/footer-links.ejs') %>
     <script>
       $(document).ready(function () {
@@ -217,6 +270,126 @@
       const today = new Date();
       const formattedDate = today.toISOString().split('T')[0];
       document.getElementById('date').value = formattedDate;
+
+      function loadSalesData(milkSales) {
+        const timeOfDaySelector = document.getElementById('timeOfDaySelector');
+        const editDate = document.getElementById('editDate');
+        const editCompanyName = document.getElementById('editCompanyName');
+        const editDistributedMilkQty = document.getElementById('editDistributedMilkQty');
+        const editPricePerLiter = document.getElementById('editPricePerLiter');
+        const editTotalPrice = document.getElementById('editTotalPrice');
+        const milkSalesId = document.getElementById('milk_sales_id');
+
+        // Disable input fields initially
+        editDistributedMilkQty.disabled = true;
+        editPricePerLiter.disabled = true;
+        editTotalPrice.disabled = true;
+
+        // Clear inputs initially
+        editDistributedMilkQty.value = '';
+        editPricePerLiter.value = '';
+        editTotalPrice.value = '';
+
+        // Update Date and Company Name (common for morning and evening)
+        editDate.value = milkSales.date;
+        editCompanyName.value = milkSales.company_name;
+        milkSalesId.value = milkSales.id; // Set milk sales record ID
+
+        // Check if only one timing (morning or evening) is available
+        if (milkSales.morning_qty && !milkSales.evening_qty) {
+          // Auto-select morning
+          timeOfDaySelector.value = 'morning';
+          timeOfDaySelector.disabled = true; // Disable the select option since only morning exists
+          loadTimingData('morning', milkSales);
+        } else if (!milkSales.morning_qty && milkSales.evening_qty) {
+          // Auto-select evening
+          timeOfDaySelector.value = 'evening';
+          timeOfDaySelector.disabled = true; // Disable the select option since only evening exists
+          loadTimingData('evening', milkSales);
+        } else {
+          // Enable the select option if both morning and evening records exist
+          timeOfDaySelector.disabled = false;
+        }
+
+        // Add event listener for the time of day selection
+        timeOfDaySelector.addEventListener('change', function () {
+          const selectedTime = timeOfDaySelector.value;
+          loadTimingData(selectedTime, milkSales);
+        });
+      }
+
+      function loadTimingData(selectedTime, milkSales) {
+        const editDistributedMilkQty = document.getElementById('editDistributedMilkQty');
+        const editPricePerLiter = document.getElementById('editPricePerLiter');
+        const editTotalPrice = document.getElementById('editTotalPrice');
+
+        // Enable the fields once timing is selected or auto-selected
+        editDistributedMilkQty.disabled = false;
+        editPricePerLiter.disabled = false;
+        editTotalPrice.disabled = false;
+
+        if (selectedTime === 'morning') {
+          // Load morning data
+          editDistributedMilkQty.value = milkSales.morning_qty || '';
+          editPricePerLiter.value = milkSales.morning_price_per_liter || '';
+          editTotalPrice.value = milkSales.morning_total_price || '';
+        } else if (selectedTime === 'evening') {
+          // Load evening data
+          editDistributedMilkQty.value = milkSales.evening_qty || '';
+          editPricePerLiter.value = milkSales.evening_price_per_liter || '';
+          editTotalPrice.value = milkSales.evening_total_price || '';
+        }
+      }
+
+      function updateEditTotalPrice() {
+        const quantity = document.getElementById('editDistributedMilkQty').value;
+        const price = document.getElementById('editPricePerLiter').value;
+        const totalPriceInput = document.getElementById('editTotalPrice');
+
+        const totalPrice = quantity * price;
+        totalPriceInput.value = isNaN(totalPrice) ? '' : totalPrice.toFixed(2);
+      }
+
+      document.getElementById('editMilkSalesForm').addEventListener('submit', async function (event) {
+        event.preventDefault();
+
+        const milk_sales_id = document.getElementById('milk_sales_id').value;
+        const collection_time = document.getElementById('timeOfDaySelector').value; // morning or evening
+        const distributed_milk_qty = document.getElementById('editDistributedMilkQty').value;
+        const price_per_liter = document.getElementById('editPricePerLiter').value;
+        const total_price = document.getElementById('editTotalPrice').value;
+
+        if (!collection_time) {
+          alert('Please select a record to edit (morning or evening).');
+          return;
+        }
+
+        try {
+          const response = await fetch(`/milk-sales-edit`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              id: milk_sales_id,
+              collection_time,
+              distributed_milk_qty,
+              price_per_liter,
+              total_price
+            }),
+          });
+
+          const data = await response.json();
+
+          if (!response.ok) {
+            alert(data.message);
+          } else {
+            alert('Milk sales record updated successfully!');
+            location.reload();
+          }
+        } catch (error) {
+          console.error('Error updating milk sales record:', error);
+        }
+      });
+
     </script>
 
     <script>

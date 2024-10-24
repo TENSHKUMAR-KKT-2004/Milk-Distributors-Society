@@ -58,15 +58,23 @@ const getMilkSalesPage = async (req, res) => {
                             evening_qty: 0,
                             total_qty: 0,
                             total_amt: 0,
+                            morning_price_per_liter:0,
+                            evening_price_per_liter:0,
+                            morning_total_price:0,
+                            evening_total_price:0,
                             price_per_liter: record.price_per_liter,
                         };
                     }
                     if (record.collection_time === 'morning') {
                         acc[key].morning_qty += record.distributed_milk_qty;
                         acc[key].total_amt += record.total_amt;
+                        acc[key].morning_price_per_liter += record.price_per_liter;
+                        acc[key].morning_total_price += record.total_amt;
                     } else {
                         acc[key].evening_qty += record.distributed_milk_qty;
                         acc[key].total_amt += record.total_amt;
+                        acc[key].evening_price_per_liter += record.price_per_liter;
+                        acc[key].evening_total_price += record.total_amt;
                     }
                     acc[key].total_qty = acc[key].morning_qty + acc[key].evening_qty;
                     return acc;
