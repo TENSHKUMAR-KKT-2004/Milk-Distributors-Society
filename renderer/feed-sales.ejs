@@ -211,6 +211,7 @@
           }
           else {
             alert(data.message || 'Cattle feed product sales record added successfully!');
+            location.reload();
           }
         } catch (error) {
           console.error('Error updating producer details:', error);

@@ -121,63 +121,60 @@
                         <th width="10%">பால் கம்பெனி</th>
                         <th width="10%">காலை(லி) </th>
                         <th width="10%">மாலை(லி) </th>
-                        <th width="10%">மொத்த பால்</th>
                         <th width="10%">பால் விலை</th>
+                        <th width="10%">மொத்த பால்</th>
                         <th width="10%">மொத்த Amount</th>
-                        <!-- <th width="10%">Action</th> -->
+                        <th width="10%">Action</th>
                       </tr>
-                      <tr>
-                        <td>1</td>
-                        <td>01-09-2024</td>
-                        <td>Aavin</td>
-                        <td>9.5</td>
-                        <td>8.4</td>
-                        <td>17.9</td>
-                        <td>34.00</td>
-                        <td>532.00</td>
-                        <!-- <td><a href="/milk-edit" class="btn btn-sm px-3 btn-primary w-100">Edit ></a></td> -->
-                      </tr>
-
-                      <tr>
-                        <td>2</td>
-                        <td>01-09-2024</td>
-                        <td>Aavin</td>
-                        <td>9.5</td>
-                        <td>8.4</td>
-                        <td>17.9</td>
-                        <td>34.00</td>
-                        <td>532.00</td>
-                        <!-- <td><a href="/milk-edit" class="btn btn-sm px-3 btn-primary w-100">Edit ></a></td> -->
-                      </tr>
-
-                      <tr>
-                        <td>3</td>
-                        <td>01-09-2024</td>
-                        <td>Aavin</td>
-                        <td>9.5</td>
-                        <td>8.4</td>
-                        <td>17.9</td>
-                        <td>34.00</td>
-                        <td>532.00</td>
-                        <!-- <td><a href="/milk-edit" class="btn btn-sm px-3 btn-primary w-100">Edit ></a></td> -->
-                      </tr>
-                      <tr>
-                        <td>4</td>
-                        <td>01-09-2024</td>
-                        <td>Aavin</td>
-                        <td>9.5</td>
-                        <td>8.4</td>
-                        <td>17.9</td>
-                        <td>34.00</td>
-                        <td>532.00</td>
-                        <!-- <td><a href="/milk-edit" class="btn btn-sm px-3 btn-primary w-100 ">Edit ></a></td> -->
-                      </tr>
-                      <tr>
-                        <td colspan="6" align="right">மொத்தம்</td>
-                        <td>244.6</td>
-                        <td>5000.00</td>
-                        <!-- <td></td> -->
-                      </tr>
+                      <% let totalQty=0; let totalAmount=0; %>
+                        <% if (sales_record && sales_record.length> 0) { %>
+                          <% sales_record.forEach((record, index)=> { %>
+                            <tr>
+                              <td>
+                                <%= index + 1 %>
+                              </td>
+                              <td>
+                                <%= new Date(record.date).toLocaleDateString('en-GB') %>
+                              </td>
+                              <td>
+                                <% const company=companies.find(c=> c.id === record.company_id);
+                                  %>
+                                  <%= company ? company.name : 'Unknown Company' %>
+                              </td>
+                              <td>
+                                <%= record.morning_qty> 0 ? record.morning_qty.toFixed(2) : '' %>
+                              </td>
+                              <td>
+                                <%= record.evening_qty> 0 ? record.evening_qty.toFixed(2) : '' %>
+                              </td>
+                              <td>
+                                <%= record.price_per_liter.toFixed(2) %>
+                              </td>
+                              <td>
+                                <%= record.total_qty.toFixed(2) %>
+                              </td>
+                              <td>
+                                <%= record.total_amt.toFixed(2) %>
+                              </td>
+                              <td></td>
+                            </tr>
+                            <% totalQty +=record.total_qty; totalAmount +=record.total_amt; %>
+                              <% }); %>
+                                <% } else { %>
+                                  <tr>
+                                    <td colspan="8">No sales records found.</td>
+                                  </tr>
+                                  <% } %>
+                                    <tr>
+                                      <td colspan="6" align="right">மொத்தம்</td>
+                                      <td>
+                                        <%= totalQty.toFixed(2) %>
+                                      </td>
+                                      <td>
+                                        <%= totalAmount.toFixed(2) %>
+                                      </td>
+                                      <td></td>
+                                    </tr>
 
                     </tbody>
                   </table>
@@ -282,6 +279,7 @@
             }
             else {
               alert(data.message || 'Milk sales record added successfully!');
+              location.reload();
             }
           } catch (error) {
             console.error('Error updating milk sales details:', error);

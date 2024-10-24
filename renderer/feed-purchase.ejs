@@ -261,6 +261,7 @@
             }
             else {
               alert(data.message || 'cattle feed product purchase record added successfully!');
+              location.reload();
             }
           } catch (error) {
             console.error('Error adding feed purchase record details:', error);
@@ -334,6 +335,7 @@
           }
           else {
             alert(data.message || 'cattle feed product purchase record added successfully!');
+            location.reload();
           }
         } catch (error) {
           console.error('Error updating purchase:', error);

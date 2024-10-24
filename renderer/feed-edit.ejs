@@ -95,6 +95,8 @@
               }
               else {
                   alert(data.message || 'Cattle feed product edited successfully!');
+                  location.reload();
+
               }
           } catch (error) {
               console.error('Error updating cattle feed product details:', error);

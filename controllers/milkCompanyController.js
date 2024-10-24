@@ -42,9 +42,40 @@ const getMilkSalesPage = async (req, res) => {
             if (err) {
                 return res.status(500).send('Error fetching companies');
             }
+            
+            db.all("SELECT * FROM milk_distributions", [], (err, sales_record) => {
+                if (err) {
+                    return res.status(500).send('Error fetching sales records');
+                }
 
-            res.render('milk-sales', { companies });
+                const combinedRecords = sales_record.reduce((acc, record) => {
+                    const key = `${record.date}-${record.company_id}`;
+                    if (!acc[key]) {
+                        acc[key] = {
+                            date: record.date,
+                            company_id: record.company_id,
+                            morning_qty: 0,
+                            evening_qty: 0,
+                            total_qty: 0,
+                            total_amt: 0,
+                            price_per_liter: record.price_per_liter,
+                        };
+                    }
+                    if (record.collection_time === 'morning') {
+                        acc[key].morning_qty += record.distributed_milk_qty;
+                        acc[key].total_amt += record.total_amt;
+                    } else {
+                        acc[key].evening_qty += record.distributed_milk_qty;
+                        acc[key].total_amt += record.total_amt;
+                    }
+                    acc[key].total_qty = acc[key].morning_qty + acc[key].evening_qty;
+                    return acc;
+                }, {});
 
+                const result = Object.values(combinedRecords);
+
+                res.render('milk-sales', { companies, sales_record: result });
+            });
         });
     } catch (err) {
         console.error('Error fetching data from the database:', err);
@@ -116,30 +147,38 @@ const addMilkSaleRecord = async (req, res) => {
             insertMilkDistribution();
         } else {
             const query = `
-          SELECT * FROM milk_distributions 
-          WHERE date = ? AND collection_time = ? AND company_id = ?;
-        `;
+                SELECT collection_time FROM milk_distributions 
+                WHERE date = ? AND company_id = ?;
+            `;
 
-            db.get(query, [date, collection_time, company_id], (err, row) => {
+            db.all(query, [date, company_id], (err, rows) => {
                 if (err) {
                     return res.status(500).json({ message: 'Database error', error: err });
                 }
 
-                if (row) {
+                const existingTimes = rows.map(row => row.collection_time);
+                if (existingTimes.includes(collection_time)) {
                     return res.status(400).json({
-                        message: `Record already exists for ${company_id} on ${date} at ${collection_time}.`
+                        message: `Record already exists for ${company_id} on ${date} during ${collection_time}.`
                     });
                 }
+
+                if (existingTimes.length >= 2) {
+                    return res.status(400).json({
+                        message: `Cannot add more than one morning and one evening record for ${company_id} on ${date}.`
+                    });
+                }
+
                 insertMilkDistribution();
             });
         }
 
         function insertMilkDistribution() {
             const insertQuery = `
-          INSERT INTO milk_distributions 
-          (date, collection_time, company_id, distributed_milk_qty, FAT, SNF, price_per_liter, total_amt, incentive_price)
-          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);
-        `;
+                INSERT INTO milk_distributions 
+                (date, collection_time, company_id, distributed_milk_qty, FAT, SNF, price_per_liter, total_amt, incentive_price)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);
+            `;
 
             const params = [
                 date,

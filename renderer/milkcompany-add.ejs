@@ -70,6 +70,7 @@
         }
         else {
           alert(data.message || 'New company details added successfully!');
+          location.reload();
         }
       } catch (error) {
         console.error('Error:', error);

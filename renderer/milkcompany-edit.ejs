@@ -94,6 +94,7 @@
                 }
                 else {
                     alert(data.message || 'Company details updated successfully!');
+                    location.reload();
                 }
             } catch (error) {
                 console.error('Error updating company details details:', error);
