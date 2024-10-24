@@ -55,14 +55,19 @@ const getMilkSalesPage = async (req, res) => {
                             date: record.date,
                             company_id: record.company_id,
                             morning_qty: 0,
+                            morning_id:0,
+                            evening_id:0,
+                            evening_FAT:0,
+                            evening_SNF:0,
+                            morning_FAT:0,
+                            morning_SNF:0,
                             evening_qty: 0,
                             total_qty: 0,
                             total_amt: 0,
                             morning_price_per_liter:0,
                             evening_price_per_liter:0,
                             morning_total_price:0,
-                            evening_total_price:0,
-                            price_per_liter: record.price_per_liter,
+                            evening_total_price:0
                         };
                     }
                     if (record.collection_time === 'morning') {
@@ -70,11 +75,17 @@ const getMilkSalesPage = async (req, res) => {
                         acc[key].total_amt += record.total_amt;
                         acc[key].morning_price_per_liter += record.price_per_liter;
                         acc[key].morning_total_price += record.total_amt;
+                        acc[key].morning_id += record.id;
+                        acc[key].morning_FAT += record.FAT;
+                        acc[key].morning_SNF += record.SNF;
                     } else {
                         acc[key].evening_qty += record.distributed_milk_qty;
                         acc[key].total_amt += record.total_amt;
                         acc[key].evening_price_per_liter += record.price_per_liter;
                         acc[key].evening_total_price += record.total_amt;
+                        acc[key].evening_id += record.id;
+                        acc[key].evening_FAT += record.FAT;
+                        acc[key].evening_SNF += record.SNF;
                     }
                     acc[key].total_qty = acc[key].morning_qty + acc[key].evening_qty;
                     return acc;
@@ -218,16 +229,13 @@ const addMilkSaleRecord = async (req, res) => {
 
 const updateMilkSaleRecord = (req, res) => {
     const {
-      id,
-      date,
-      collection_time,
-      company_id,
-      distributed_milk_qty,
-      FAT,
-      SNF,
-      price_per_liter,
-      total_amt,
-      incentive_price
+        id,
+        collection_time,
+        distributed_milk_qty,
+        price_per_liter,
+        total_price,
+        SNF,
+        FAT
     } = req.body;
   
     const checkQuery = `
@@ -249,33 +257,26 @@ const updateMilkSaleRecord = (req, res) => {
       const updateQuery = `
         UPDATE milk_distributions 
         SET 
-          date = ?, 
-          collection_time = ?, 
-          company_id = ?, 
           distributed_milk_qty = ?, 
           FAT = ?, 
           SNF = ?, 
           price_per_liter = ?, 
-          total_amt = ?, 
-          incentive_price = ?
+          total_amt = ?
         WHERE id = ?;
       `;
   
       const params = [
-        date,
-        collection_time,
-        company_id,
         distributed_milk_qty,
         FAT,
         SNF,
         price_per_liter,
-        total_amt,
-        incentive_price,
+        total_price,
         id
       ];
   
       db.run(updateQuery, params, function (err) {
         if (err) {
+            console.log(err)
           return res.status(500).json({ message: 'Failed to update milk distribution record', error: err });
         }
   

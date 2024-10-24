@@ -5,13 +5,13 @@ const getCowOwners = async (req, res) => {
     db.all("SELECT * FROM milk_producers WHERE is_active = 1", [], (err, activeProducers) => {
       if (err) {
         console.error("Error fetching active producers:", err);
-        return res.status(500).send("Error fetching active producers");
+        return res.status(500).json({message:"Error fetching active producers",error:err.message});
       }
 
       db.all("SELECT * FROM milk_producers WHERE is_active = 0", [], (err, inactiveProducers) => {
         if (err) {
           console.error("Error fetching inactive producers:", err);
-          return res.status(500).send("Error fetching inactive producers");
+          return res.status(500).json({message:"Error fetching inactive producers",error:err.message});
         }
 
         res.render('cow-owners', {
@@ -22,7 +22,7 @@ const getCowOwners = async (req, res) => {
     });
   } catch (err) {
     console.error('Error fetching data from the database:', err);
-    res.status(500).send('Internal Server Error');
+    res.status(500).json({message:'Internal Server Error',error:err.message});
   }
 };
 
@@ -32,11 +32,11 @@ const getCowOwnerOne = async (req, res) => {
     db.get("SELECT * FROM milk_producers WHERE id = ?", [producerId], (err, producer) => {
       if (err) {
         console.error("Error fetching cow owner:", err);
-        return res.status(500).send("Error fetching cow owner");
+        return res.status(500).json({message:"Error fetching cow owner",error:err.message});
       }
 
       if (!producer) {
-        return res.status(404).send("Cow owner not found");
+        return res.status(404).json({message:"Cow owner not found",error:err.message});
       }
 
       res.render('cow-owners-one', {
@@ -45,7 +45,7 @@ const getCowOwnerOne = async (req, res) => {
     });
   } catch (err) {
     console.error('Error fetching data from the database:', err);
-    res.status(500).send('Internal Server Error');
+    res.status(500).json({message:'Internal Server Error',error:err.message});
   }
 };
 
@@ -53,7 +53,7 @@ const getAddCowOwnerPage = async (req, res) => {
   db.all("SELECT id, name FROM milk_collectors WHERE is_active = 1", [], (err, collectors) => {
     if (err) {
       console.error(err.message);
-      res.status(500).send("Error fetching milk collectors");
+      res.status(500).json({message:"Error fetching milk collectors",error:err.message});
       return;
     }
 
@@ -65,13 +65,13 @@ const getEditCowOwnerPage = async (req, res) => {
   try {
     db.all("SELECT * FROM milk_producers WHERE is_active = 1", [], (err, producers) => {
       if (err) {
-        return res.status(500).send('Error fetching producers');
+        return res.status(500).json({message:'Error fetching producers', error: err.message});
       }
 
       db.all("SELECT id, name FROM milk_collectors WHERE is_active = 1", [], (err, collectors) => {
         if (err) {
           console.error(err.message);
-          res.status(500).send("Error fetching milk collectors");
+          res.status(500).json({message:"Error fetching milk collectors",error:err.message});
           return;
         }
         res.render('cowowner-edit', { producers, collectors });
@@ -80,7 +80,7 @@ const getEditCowOwnerPage = async (req, res) => {
     });
   } catch (err) {
     console.error('Error fetching data from the database:', err);
-    res.status(500).send('Internal Server Error');
+    res.status(500).json({message:'Internal Server Error',error:err.message});
   }
 }
 
@@ -106,7 +106,7 @@ const addCowOwner = async (req, res) => {
     });
   } catch (err) {
     console.error('Error fetching data from the database:', err);
-    res.status(500).send('Internal Server Error');
+    res.status(500).json({message:'Internal Server Error',error:err.message});
   }
 }
 
@@ -128,7 +128,7 @@ const updateCowOwner = async (req, res) => {
     });
   } catch (err) {
     console.error('Error fetching data from the database:', err);
-    res.status(500).send('Internal Server Error');
+    res.status(500).json({message:'Internal Server Error',error:err.message});
   }
 };
 
@@ -143,18 +143,18 @@ const activateCowOwner = async (req,res)=>{
     db.get(query, [producerId], (err, producer) => {
       if (err) {
         console.error("Error while active the cow owner:", err);
-        return res.status(500).send("Error while active the cow owner");
+        return res.status(500).json({message:"Error while active the cow owner",error:err.message});
       }
 
       if (!producer) {
-        return res.status(404).send("Cow owner not found");
+        return res.status(404).json({message: "Cow owner not found"});
       }
 
-      return res.status(200).send("Cow owner activated successfully!");
+      return res.status(200).json({message: "Cow owner activated successfully!"});
     });
   } catch (err) {
     console.error('Error fetching data from the database:', err);
-    res.status(500).send('Internal Server Error');
+    res.status(500).json({message:'Internal Server Error',error:err.message});
   }
 }
 
@@ -169,18 +169,18 @@ const deactivateCowOwner = async (req,res)=>{
     db.get(query, [producerId], (err, producer) => {
       if (err) {
         console.error("Error while deactive the cow owner:", err);
-        return res.status(500).send("Error while deactive the cow owner");
+        return res.status(500).json({message:"Error while deactive the cow owner"});
       }
 
       if (!producer) {
-        return res.status(404).send("Cow owner not found");
+        return res.status(404).json({message:"Cow owner not found"});
       }
 
-      return res.status(200).send("Cow owner deactivated successfully!");
+      return res.status(200).json({message:"Cow owner deactivated successfully!"});
     });
   } catch (err) {
     console.error('Error fetching data from the database:', err);
-    res.status(500).send('Internal Server Error');
+    res.status(500).json({message:'Internal Server Error',error:err.message});
   }
 }
 

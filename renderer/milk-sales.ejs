@@ -101,7 +101,7 @@
 
                       <div class="col-12 col-lg-6  mb-3">
                         <input type="text" id="total_amt" name="total_amt" class="form-control"
-                          placeholder="மொத்த Amount" required>
+                          placeholder="மொத்த விலை" required readonly>
                       </div>
 
                       <div class="col-12 col-lg-6  mb-3">
@@ -121,7 +121,8 @@
                         <th width="10%">பால் கம்பெனி</th>
                         <th width="10%">காலை(லி) </th>
                         <th width="10%">மாலை(லி) </th>
-                        <th width="10%">பால் விலை</th>
+                        <th width="10%">பால் விலை (காலை)</th>
+                        <th width="10%">பால் விலை (மாலை)</th>
                         <th width="10%">மொத்த பால்</th>
                         <th width="10%">மொத்த Amount</th>
                         <th width="10%">Action</th>
@@ -139,7 +140,8 @@
                               <td>
                                 <% const company=companies.find(c=> c.id === record.company_id);
                                   %>
-                                  <%= company ? company.name : 'Unknown Company' %>
+                                  <% record.company_name=company ? company.name : 'Unknown Company' %>
+                                    <%= record.company_name %>
                               </td>
                               <td>
                                 <%= record.morning_qty> 0 ? record.morning_qty.toFixed(2) : '' %>
@@ -148,7 +150,10 @@
                                 <%= record.evening_qty> 0 ? record.evening_qty.toFixed(2) : '' %>
                               </td>
                               <td>
-                                <%= record.price_per_liter.toFixed(2) %>
+                                <%= record.morning_price_per_liter.toFixed(2) %>
+                              </td>
+                              <td>
+                                <%= record.evening_price_per_liter.toFixed(2) %>
                               </td>
                               <td>
                                 <%= record.total_qty.toFixed(2) %>
@@ -168,7 +173,7 @@
                                   </tr>
                                   <% } %>
                                     <tr>
-                                      <td colspan="6" align="right">மொத்தம்</td>
+                                      <td colspan="7" align="right">மொத்தம்</td>
                                       <td>
                                         <%= totalQty.toFixed(2) %>
                                       </td>
@@ -199,7 +204,6 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <!-- Add an option to select morning or evening -->
           <div class="mb-3">
             <label for="timeOfDaySelector" class="form-label">Select Record to Edit</label>
             <select id="timeOfDaySelector" class="form-select">
@@ -220,13 +224,22 @@
               <input type="text" id="editCompanyName" class="form-control" placeholder="Company Name" readonly>
             </div>
             <div class="mb-3">
+              <label for="editFAT" class="form-label">FAT</label>
+              <input type="text" id="editFAT" class="form-control" placeholder="FAT">
+            </div>
+            <div class="mb-3">
+              <label for="editSNF" class="form-label">SNF</label>
+              <input type="text" id="editSNF" class="form-control" placeholder="SNF">
+            </div>
+            <div class="mb-3">
               <label for="editDistributedMilkQty" class="form-label">Distributed Milk Quantity</label>
               <input type="text" id="editDistributedMilkQty" class="form-control" placeholder="Quantity"
                 oninput="updateEditTotalPrice()">
             </div>
             <div class="mb-3">
               <label for="editPricePerLiter" class="form-label">Price Per Liter</label>
-              <input type="text" id="editPricePerLiter" class="form-control" placeholder="Price">
+              <input type="text" id="editPricePerLiter" class="form-control" placeholder="Price"
+                oninput="updateEditTotalPrice()">
             </div>
             <div class="mb-3">
               <label for="editTotalPrice" class="form-label">Total Price</label>
@@ -278,40 +291,36 @@
         const editDistributedMilkQty = document.getElementById('editDistributedMilkQty');
         const editPricePerLiter = document.getElementById('editPricePerLiter');
         const editTotalPrice = document.getElementById('editTotalPrice');
-        const milkSalesId = document.getElementById('milk_sales_id');
+        const editSNF = document.getElementById('editSNF');
+        const editFAT = document.getElementById('editFAT');
 
-        // Disable input fields initially
         editDistributedMilkQty.disabled = true;
         editPricePerLiter.disabled = true;
         editTotalPrice.disabled = true;
+        editSNF.disabled = true;
+        editFAT.disabled = true;
 
-        // Clear inputs initially
         editDistributedMilkQty.value = '';
         editPricePerLiter.value = '';
         editTotalPrice.value = '';
+        editSNF.value = '';
+        editFAT.value = '';
 
-        // Update Date and Company Name (common for morning and evening)
         editDate.value = milkSales.date;
         editCompanyName.value = milkSales.company_name;
-        milkSalesId.value = milkSales.id; // Set milk sales record ID
 
-        // Check if only one timing (morning or evening) is available
         if (milkSales.morning_qty && !milkSales.evening_qty) {
-          // Auto-select morning
           timeOfDaySelector.value = 'morning';
-          timeOfDaySelector.disabled = true; // Disable the select option since only morning exists
+          timeOfDaySelector.disabled = true
           loadTimingData('morning', milkSales);
         } else if (!milkSales.morning_qty && milkSales.evening_qty) {
-          // Auto-select evening
           timeOfDaySelector.value = 'evening';
-          timeOfDaySelector.disabled = true; // Disable the select option since only evening exists
+          timeOfDaySelector.disabled = true;
           loadTimingData('evening', milkSales);
         } else {
-          // Enable the select option if both morning and evening records exist
           timeOfDaySelector.disabled = false;
         }
 
-        // Add event listener for the time of day selection
         timeOfDaySelector.addEventListener('change', function () {
           const selectedTime = timeOfDaySelector.value;
           loadTimingData(selectedTime, milkSales);
@@ -322,22 +331,30 @@
         const editDistributedMilkQty = document.getElementById('editDistributedMilkQty');
         const editPricePerLiter = document.getElementById('editPricePerLiter');
         const editTotalPrice = document.getElementById('editTotalPrice');
+        const milkSalesId = document.getElementById('milk_sales_id');
+        const editFAT = document.getElementById('editFAT');
+        const editSNF = document.getElementById('editSNF');
 
-        // Enable the fields once timing is selected or auto-selected
         editDistributedMilkQty.disabled = false;
         editPricePerLiter.disabled = false;
         editTotalPrice.disabled = false;
+        editFAT.disabled = false;
+        editSNF.disabled = false;
 
         if (selectedTime === 'morning') {
-          // Load morning data
           editDistributedMilkQty.value = milkSales.morning_qty || '';
           editPricePerLiter.value = milkSales.morning_price_per_liter || '';
           editTotalPrice.value = milkSales.morning_total_price || '';
+          editFAT.value = milkSales.morning_FAT || '';
+          editSNF.value = milkSales.morning_SNF || '';
+          milkSalesId.value = milkSales.morning_id;
         } else if (selectedTime === 'evening') {
-          // Load evening data
           editDistributedMilkQty.value = milkSales.evening_qty || '';
           editPricePerLiter.value = milkSales.evening_price_per_liter || '';
           editTotalPrice.value = milkSales.evening_total_price || '';
+          editFAT.value = milkSales.evening_FAT || '';
+          editSNF.value = milkSales.evening_SNF || '';
+          milkSalesId.value = milkSales.evening_id;
         }
       }
 
@@ -358,6 +375,8 @@
         const distributed_milk_qty = document.getElementById('editDistributedMilkQty').value;
         const price_per_liter = document.getElementById('editPricePerLiter').value;
         const total_price = document.getElementById('editTotalPrice').value;
+        const FAT = document.getElementById('editFAT').value;
+        const SNF = document.getElementById('editSNF').value;
 
         if (!collection_time) {
           alert('Please select a record to edit (morning or evening).');
@@ -373,7 +392,9 @@
               collection_time,
               distributed_milk_qty,
               price_per_liter,
-              total_price
+              total_price,
+              FAT,
+              SNF
             }),
           });
 

@@ -2,7 +2,7 @@
   "name": "milk-distributors-society",
   "productName": "Milk Distributors Society",
   "version": "1.0.0",
-  "description": "Freelancing Project",
+  "description": "Milk Distributors Society",
   "main": "main.js",
   "scripts": {
     "start": "electron .",

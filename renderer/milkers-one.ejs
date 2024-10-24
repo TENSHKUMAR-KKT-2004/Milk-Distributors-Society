@@ -290,6 +290,7 @@
       } else if (response.status === 500) {
         showToast('Error', data.message || "Internal Server Error. Please try again later.", 'danger');
       }
+      location.reload();
     } catch (error) {
       console.error('Error during activation:', error);
     }
